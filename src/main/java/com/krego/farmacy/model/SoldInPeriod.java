@@ -21,7 +21,9 @@ public class SoldInPeriod {
     private long soldId;
 
     @NonNull
+    @Column(name = "period_start")
     private Date periodStart;
+    @Column(name = "period_end")
     private Date periodEnd;
     private double sum;
     private int amount;

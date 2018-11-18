@@ -1,7 +1,11 @@
 package com.krego.farmacy.controller;
 
 import com.krego.farmacy.exception.ResourceNotFoundException;
+import com.krego.farmacy.model.Drugstore;
+import com.krego.farmacy.model.Medicine;
 import com.krego.farmacy.model.SoldInPeriod;
+import com.krego.farmacy.repositories.DrugstoreRepository;
+import com.krego.farmacy.repositories.MedicineRepository;
 import com.krego.farmacy.repositories.SoldInPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,12 @@ public class SoldInPeriodController {
     @Autowired
     SoldInPeriodRepository soldInPeriodRepository;
 
+    @Autowired
+    DrugstoreRepository drugstoreRepository;
+
+    @Autowired
+    MedicineRepository medicineRepository;
+
     //GET mappings
     @GetMapping("/get/{id}")
     public SoldInPeriod getSoldInPeriodById(@PathVariable(value = "id") Long soldInPeriodId) {
@@ -31,7 +41,16 @@ public class SoldInPeriodController {
 
     //POST mappings
     @PostMapping("/new")
-    public SoldInPeriod createSoldInPeriod(@Valid @RequestBody SoldInPeriod soldInPeriod) {
+    public SoldInPeriod createSoldInPeriod(@RequestParam("drugstoreCode") Long drugstoreCode,
+                                           @RequestParam("medicineCode") Long medicineCode,
+                                           @Valid @RequestBody SoldInPeriod soldInPeriod) {
+        Drugstore parentDrugstore = drugstoreRepository.findById(drugstoreCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "drugstoreCode", drugstoreCode));
+        Medicine parentMedicine = medicineRepository.findById(medicineCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Medicine", "medicineCode", medicineCode));
+        soldInPeriod.setDrugstore(parentDrugstore);
+        soldInPeriod.setMedicine(parentMedicine);
+
         return soldInPeriodRepository.save(soldInPeriod);
     }
 

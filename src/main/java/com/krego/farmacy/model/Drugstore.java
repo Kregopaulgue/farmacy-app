@@ -25,7 +25,9 @@ public class Drugstore {
 
     @NonNull
     private String address;
+    @Column(name = "network_title")
     private String networkTitle;
+    @Column(name = "phone_number")
     private String phoneNumber;
     private String region;
 

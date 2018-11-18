@@ -25,7 +25,9 @@ public class Manager {
     private String surname;
     private String patronymic;
     private String address;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "corporate_phone_number")
     private String corporatePhoneNumber;
     private String position;
 

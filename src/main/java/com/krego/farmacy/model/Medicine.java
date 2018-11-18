@@ -21,8 +21,10 @@ public class Medicine {
 
     @NonNull
     private String title;
+    @Column(name = "expiration_term")
     private String expirationTerm;
     private double price;
+    @Column(name = "measurement_unit")
     private String measurementUnit;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

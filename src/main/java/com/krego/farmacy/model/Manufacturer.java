@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Data
@@ -23,7 +20,9 @@ public class Manufacturer {
 
     @NonNull
     private String address;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "firm_title")
     private String firmTitle;
 
     @OneToMany(mappedBy = "manufacturer", orphanRemoval = true)

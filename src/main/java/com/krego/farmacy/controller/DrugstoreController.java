@@ -3,6 +3,7 @@ package com.krego.farmacy.controller;
 import com.krego.farmacy.exception.ResourceNotFoundException;
 import com.krego.farmacy.model.Drugstore;
 import com.krego.farmacy.repositories.DrugstoreRepository;
+import com.krego.farmacy.repositories.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ public class DrugstoreController {
     @Autowired
     DrugstoreRepository drugstoreRepository;
 
+    @Autowired
+    ManagerRepository managerRepository;
 
     //GET mappings
     @GetMapping("/get/{id}")
@@ -32,8 +35,13 @@ public class DrugstoreController {
 
     //POST mappings
     @PostMapping("/new")
-    public Drugstore createDrugstore(@Valid @RequestBody Drugstore drugstore) {
-        return drugstoreRepository.save(drugstore);
+    public Drugstore createDrugstore(@RequestParam("managerCode") Long managerCode, @Valid @RequestBody Drugstore drugstore) {
+
+        return managerRepository.findById(managerCode).map(manager -> {
+            drugstore.setManager(manager);
+            return drugstoreRepository.save(drugstore);
+        }).orElseThrow(() -> new ResourceNotFoundException("ManagerId", "manager_code", managerCode));
+
     }
 
     //PUT mappings
