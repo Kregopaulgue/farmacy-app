@@ -7,7 +7,9 @@ import lombok.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,5 +25,8 @@ public class Manufacturer {
     private String address;
     private String phoneNumber;
     private String firmTitle;
+
+    @OneToMany(mappedBy = "manufacturer", orphanRemoval = true)
+    private Set<Medicine> medicines;
 
 }

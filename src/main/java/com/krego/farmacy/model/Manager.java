@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +17,8 @@ import javax.persistence.Table;
 public class Manager {
 
     @Id
-    private long code;
+    @Column(name = "manager_code")
+    private long managerCode;
 
     @NonNull
     private String name;
@@ -27,5 +28,8 @@ public class Manager {
     private String phoneNumber;
     private String corporatePhoneNumber;
     private String position;
+
+    @OneToMany(mappedBy = "manager")
+    private Set<Drugstore> drugstores;
 
 }

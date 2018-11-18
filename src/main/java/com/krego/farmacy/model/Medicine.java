@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -19,8 +17,8 @@ import javax.persistence.Table;
 public class Medicine {
 
     @Id
-    @GeneratedValue
-    private long code;
+    @Column(name = "medicine_code")
+    private long medicineCode;
 
     @Nullable
     private long soldCode;
@@ -31,5 +29,12 @@ public class Medicine {
     private String expirationTerm;
     private double price;
     private String measurementUnit;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "manufacturer_code", nullable = false)
+    private Manufacturer manufacturer;
+
+    @OneToMany(mappedBy = "medicine")
+    private Set<SoldInPeriod> soldInPeriods;
 
 }

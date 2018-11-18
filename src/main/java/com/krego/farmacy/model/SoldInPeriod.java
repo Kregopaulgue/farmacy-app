@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Data
@@ -18,13 +16,22 @@ import java.sql.Date;
 public class SoldInPeriod {
 
     @Id
-    private long id;
+    @GeneratedValue
+    @Column(name = "sold_id")
+    private long soldId;
 
     @NonNull
-    private long drugStoreCode;
     private Date periodStart;
     private Date periodEnd;
     private double sum;
     private int amount;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "drugstore_code", nullable = false)
+    private Drugstore drugstore;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "medicine_code", nullable = false)
+    private Medicine medicine;
 
 }
