@@ -1,6 +1,5 @@
 package com.krego.farmacy.model;
 
-import jdk.internal.jline.internal.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +19,7 @@ public class Medicine {
     @Column(name = "medicine_code")
     private long medicineCode;
 
-    @Nullable
-    private long soldCode;
-
     @NonNull
-    private long manufacturerCode;
     private String title;
     private String expirationTerm;
     private double price;

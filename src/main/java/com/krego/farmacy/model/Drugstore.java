@@ -24,7 +24,6 @@ public class Drugstore {
     private long drugstoreCode;
 
     @NonNull
-    private long managerCode;
     private String address;
     private String networkTitle;
     private String phoneNumber;
