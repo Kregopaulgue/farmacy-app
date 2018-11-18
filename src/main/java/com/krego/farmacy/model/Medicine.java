@@ -1,5 +1,6 @@
 package com.krego.farmacy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,10 +28,12 @@ public class Medicine {
     @Column(name = "measurement_unit")
     private String measurementUnit;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manufacturer_code", nullable = false)
     private Manufacturer manufacturer;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medicine")
     private Set<SoldInPeriod> soldInPeriods;
 

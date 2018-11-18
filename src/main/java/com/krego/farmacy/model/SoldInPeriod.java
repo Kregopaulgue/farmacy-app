@@ -1,5 +1,6 @@
 package com.krego.farmacy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,10 +29,12 @@ public class SoldInPeriod {
     private double sum;
     private int amount;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "drugstore_code", nullable = false)
     private Drugstore drugstore;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "medicine_code", nullable = false)
     private Medicine medicine;

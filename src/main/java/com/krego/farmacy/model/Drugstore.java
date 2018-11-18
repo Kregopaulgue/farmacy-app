@@ -36,6 +36,7 @@ public class Drugstore {
     @JsonIgnore
     private Manager manager;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "drugstore")
     private Set<SoldInPeriod> soldInPeriods;
 

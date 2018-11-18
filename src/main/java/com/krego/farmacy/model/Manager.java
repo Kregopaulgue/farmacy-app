@@ -1,5 +1,6 @@
 package com.krego.farmacy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -31,6 +32,7 @@ public class Manager {
     private String corporatePhoneNumber;
     private String position;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "manager")
     private Set<Drugstore> drugstores;
 
