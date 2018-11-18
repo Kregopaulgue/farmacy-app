@@ -19,8 +19,8 @@ public class ManagerController {
 
 
     //GET mappings
-    @GetMapping("/get/{id}")
-    public Manager getManagerById(@PathVariable(value = "id") Long managerId) {
+    @GetMapping("/get")
+    public Manager getManagerById(@RequestParam("managerCode") Long managerId) {
         return managerRepository.findById(managerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", managerId));
     }
@@ -37,8 +37,8 @@ public class ManagerController {
     }
 
     //PUT mappings
-    @PutMapping("/update/{id}")
-    public Manager updateManagerById(@PathVariable(value = "id") Long managerId,
+    @PutMapping("/update")
+    public Manager updateManagerById(@RequestParam("managerCode") Long managerId,
                                         @Valid @RequestBody Manager managerDetails) {
         Manager manager = managerRepository.findById(managerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", managerId));
@@ -59,8 +59,8 @@ public class ManagerController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteManager(@PathVariable(value = "id") Long managerId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteManager(@RequestParam("managerCode") Long managerId) {
 
         Manager manager = managerRepository.findById(managerId)
                             .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", managerId));

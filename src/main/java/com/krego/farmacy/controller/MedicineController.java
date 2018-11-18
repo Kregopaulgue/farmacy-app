@@ -23,8 +23,8 @@ public class MedicineController {
     ManufacturerRepository manufacturerRepository;
 
     //GET mappings
-    @GetMapping("/get/{id}")
-    public Medicine getMedicineById(@PathVariable(value = "id") Long medicineId) {
+    @GetMapping("/get")
+    public Medicine getMedicineById(@RequestParam("medicineCode") Long medicineId) {
         return medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));
     }
@@ -45,8 +45,8 @@ public class MedicineController {
     }
 
     //PUT mappings
-    @PutMapping("/update/{id}")
-    public Medicine updateMedicineById(@PathVariable(value = "id") Long medicineId,
+    @PutMapping("/update")
+    public Medicine updateMedicineById(@RequestParam("medicineCode") Long medicineId,
                                                @Valid @RequestBody Medicine medicineDetails) {
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));
@@ -64,8 +64,8 @@ public class MedicineController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteMedicine(@PathVariable(value = "id") Long medicineId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteMedicine(@RequestParam("medicineCode") Long medicineId) {
 
         Medicine medicine = medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));

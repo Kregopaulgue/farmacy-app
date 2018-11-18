@@ -22,10 +22,10 @@ public class DrugstoreController {
     ManagerRepository managerRepository;
 
     //GET mappings
-    @GetMapping("/get/{id}")
-    public Drugstore getDrugstoreById(@PathVariable(value = "id") Long drugstoreId) {
-        return drugstoreRepository.findById(drugstoreId)
-                .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "id", drugstoreId));
+    @GetMapping("/get")
+    public Drugstore getDrugstoreById(@RequestParam("drugstoreCode") Long drugstoreCode) {
+        return drugstoreRepository.findById(drugstoreCode)
+                .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "id", drugstoreCode));
     }
 
     @GetMapping("/all")
@@ -45,8 +45,8 @@ public class DrugstoreController {
     }
 
     //PUT mappings
-    @PutMapping("/update/{id}")
-    public Drugstore updateDrugstoreById(@PathVariable(value = "id") Long drugstoreId,
+    @PutMapping("/update")
+    public Drugstore updateDrugstoreById(@RequestParam("drugstoreCode") Long drugstoreId,
                                      @Valid @RequestBody Drugstore drugstoreDetails) {
         Drugstore Drugstore = drugstoreRepository.findById(drugstoreId)
                 .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "id", drugstoreId));
@@ -65,8 +65,8 @@ public class DrugstoreController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteDrugstore(@PathVariable(value = "id") Long drugstoreId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteDrugstore(@RequestParam("drugstoreCode") Long drugstoreId) {
 
         Drugstore Drugstore = drugstoreRepository.findById(drugstoreId)
                 .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "id", drugstoreId));

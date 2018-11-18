@@ -28,8 +28,8 @@ public class SoldInPeriodController {
     MedicineRepository medicineRepository;
 
     //GET mappings
-    @GetMapping("/get/{id}")
-    public SoldInPeriod getSoldInPeriodById(@PathVariable(value = "id") Long soldInPeriodId) {
+    @GetMapping("/get")
+    public SoldInPeriod getSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
         return soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
     }
@@ -55,8 +55,8 @@ public class SoldInPeriodController {
     }
 
     //PUT mappings
-    @PutMapping("/update/{id}")
-    public SoldInPeriod updateSoldInPeriodById(@PathVariable(value = "id") Long soldInPeriodId,
+    @PutMapping("/update")
+    public SoldInPeriod updateSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId,
                                        @Valid @RequestBody SoldInPeriod soldInPeriodDetails) {
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
@@ -74,8 +74,8 @@ public class SoldInPeriodController {
 
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteSoldInPeriod(@PathVariable(value = "id") Long soldInPeriodId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteSoldInPeriod(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
 
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
