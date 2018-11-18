@@ -17,6 +17,7 @@ import java.util.Set;
 public class Manufacturer {
 
     @Id
+    @Column(name = "manufacturer_code")
     private long code;
 
     @NonNull

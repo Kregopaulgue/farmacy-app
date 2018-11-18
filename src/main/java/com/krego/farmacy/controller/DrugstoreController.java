@@ -5,6 +5,8 @@ import com.krego.farmacy.model.Drugstore;
 import com.krego.farmacy.repositories.DrugstoreRepository;
 import com.krego.farmacy.repositories.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,13 @@ public class DrugstoreController {
     @GetMapping("/all")
     public List<Drugstore> getAllDrugstores() {
         return drugstoreRepository.findAll();
+    }
+
+    @GetMapping("/manager")
+    public Page<Drugstore> getAllDrugstoresByManager(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
+
+        return drugstoreRepository.findByManagerManagerCode(managerCode, pageable);
+
     }
 
     //POST mappings
