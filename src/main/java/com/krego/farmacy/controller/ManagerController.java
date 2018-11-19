@@ -4,11 +4,13 @@ import com.krego.farmacy.exception.ResourceNotFoundException;
 import com.krego.farmacy.model.Manager;
 import com.krego.farmacy.repositories.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/manager")
@@ -20,24 +22,29 @@ public class ManagerController {
 
     //GET mappings
     @GetMapping("/get")
-    public Manager getManagerById(@RequestParam("managerCode") Long managerId) {
-        return managerRepository.findById(managerId)
+    @ResponseBody
+    public ResponseEntity<?> getManagerById(@RequestParam("managerCode") Long managerId) {
+        Optional<Manager> manager = managerRepository.findById(managerId);
+        return manager.map(response -> ResponseEntity.ok().body(response))
                 .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", managerId));
     }
 
     @GetMapping("/all")
+    @ResponseBody
     public List<Manager> getAllManagers() {
         return managerRepository.findAll();
     }
 
     //POST mappings
     @PostMapping("/new")
+    @ResponseBody
     public Manager createManager(@Valid @RequestBody Manager manager) {
         return managerRepository.save(manager);
     }
 
     //PUT mappings
     @PutMapping("/update")
+    @ResponseBody
     public Manager updateManagerById(@RequestParam("managerCode") Long managerId,
                                         @Valid @RequestBody Manager managerDetails) {
         Manager manager = managerRepository.findById(managerId)
@@ -60,6 +67,7 @@ public class ManagerController {
     }
 
     @DeleteMapping("/delete")
+    @ResponseBody
     public ResponseEntity<?> deleteManager(@RequestParam("managerCode") Long managerId) {
 
         Manager manager = managerRepository.findById(managerId)

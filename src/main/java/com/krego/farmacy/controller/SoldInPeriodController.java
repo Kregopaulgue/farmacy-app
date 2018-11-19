@@ -29,18 +29,21 @@ public class SoldInPeriodController {
 
     //GET mappings
     @GetMapping("/get")
+    @ResponseBody
     public SoldInPeriod getSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
         return soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
     }
 
     @GetMapping("/all")
+    @ResponseBody
     public List<SoldInPeriod> getAllSoldInPeriods() {
         return soldInPeriodRepository.findAll();
     }
 
     //POST mappings
     @PostMapping("/new")
+    @ResponseBody
     public SoldInPeriod createSoldInPeriod(@RequestParam("drugstoreCode") Long drugstoreCode,
                                            @RequestParam("medicineCode") Long medicineCode,
                                            @Valid @RequestBody SoldInPeriod soldInPeriod) {
@@ -56,6 +59,7 @@ public class SoldInPeriodController {
 
     //PUT mappings
     @PutMapping("/update")
+    @ResponseBody
     public SoldInPeriod updateSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId,
                                        @Valid @RequestBody SoldInPeriod soldInPeriodDetails) {
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)
@@ -75,6 +79,7 @@ public class SoldInPeriodController {
     }
 
     @DeleteMapping("/delete")
+    @ResponseBody
     public ResponseEntity<?> deleteSoldInPeriod(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
 
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)

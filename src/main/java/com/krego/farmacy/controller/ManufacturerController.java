@@ -19,24 +19,28 @@ public class ManufacturerController {
 
     //GET mappings
     @GetMapping("/get")
+    @ResponseBody
     public Manufacturer getManufacturerById(@RequestParam("manufacturerCode") Long manufacturerId) {
         return manufacturerRepository.findById(manufacturerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Manufacturer", "id", manufacturerId));
     }
 
     @GetMapping("/all")
+    @ResponseBody
     public List<Manufacturer> getAllManufacturers() {
         return manufacturerRepository.findAll();
     }
 
     //POST mappings
     @PostMapping("/new")
+    @ResponseBody
     public Manufacturer createManufacturer(@Valid @RequestBody Manufacturer manufacturer) {
         return manufacturerRepository.save(manufacturer);
     }
 
     //PUT mappings
     @PutMapping("/update")
+    @ResponseBody
     public Manufacturer updateManufacturerById(@RequestParam("manufacturerCode") Long manufacturerId,
                                          @Valid @RequestBody Manufacturer manufacturerDetails) {
         Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId)
@@ -55,6 +59,7 @@ public class ManufacturerController {
     }
 
     @DeleteMapping("/delete")
+    @ResponseBody
     public ResponseEntity<?> deleteManufacturer(@RequestParam("manufacturerCode") Long manufacturerId) {
 
         Manufacturer manufacturer = manufacturerRepository.findById(manufacturerId)
