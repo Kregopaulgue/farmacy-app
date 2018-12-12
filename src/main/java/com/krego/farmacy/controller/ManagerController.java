@@ -7,6 +7,7 @@ import com.krego.farmacy.model.Manager;
 import com.krego.farmacy.repositories.ManagerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,7 @@ public class ManagerController {
             return manager.map(response -> ResponseEntity.ok().body(response))
                     .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", loginEntity.getLogin()));
         } else {
-            return
+            return new ResponseEntity<>("Unauthorised", HttpStatus.UNAUTHORIZED);
         }
 
     }
