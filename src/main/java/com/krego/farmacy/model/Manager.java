@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,6 +22,7 @@ public class Manager {
 
     @NonNull
     private String name;
+    private String password;
     private String surname;
     private String patronymic;
     private String address;
