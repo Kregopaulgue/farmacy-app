@@ -1,17 +1,31 @@
 package com.krego.farmacy.controller;
 
-import com.krego.farmacy.encoder.PasswordEncoderConfig;
+import com.krego.farmacy.exception.AppException;
 import com.krego.farmacy.exception.ResourceNotFoundException;
+import com.krego.farmacy.helpers.JwtTokenProvider;
 import com.krego.farmacy.helpers.LoginEntity;
+import com.krego.farmacy.helpers.RoleName;
 import com.krego.farmacy.model.Manager;
+import com.krego.farmacy.model.Role;
 import com.krego.farmacy.repositories.ManagerRepository;
 
+import com.krego.farmacy.repositories.RoleRepository;
+import com.krego.farmacy.responses.ApiResponse;
+import com.krego.farmacy.responses.JwtAuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +35,18 @@ public class ManagerController {
 
     @Autowired
     ManagerRepository managerRepository;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtTokenProvider tokenProvider;
 
     //GET mappings
     @GetMapping("/get")
@@ -41,22 +67,57 @@ public class ManagerController {
     @PostMapping("/new")
     @ResponseBody
     public Manager createManager(@Valid @RequestBody Manager manager) {
-        PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
-        String hashedPassword = passwordEncoderConfig.passwordEncoder().encode(manager.getPassword());
+        String hashedPassword = passwordEncoder.encode(manager.getPassword());
         manager.setPassword(hashedPassword);
         return managerRepository.save(manager);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody Manager manager) {
+        if(managerRepository.existsById(manager.getManagerCode())) {
+            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
+                    HttpStatus.BAD_REQUEST);
+        }
+
+        // Creating user's account
+        Manager newManager = new Manager(manager.getManagerCode(), manager.getName(), manager.getPassword(),
+                manager.getSurname(), manager.getPatronymic(), manager.getAddress(), manager.getPhoneNumber(),
+                manager.getCorporatePhoneNumber(), manager.getPosition());
+
+        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+
+        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new AppException("User Role not set."));
+
+        newManager.setRoles(Collections.singleton(userRole));
+
+        Manager result = managerRepository.save(manager);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath().path("/api/users/{username}")
+                .buildAndExpand(Long.toString(result.getManagerCode())).toUri();
+
+        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+    }
+
+    @PostMapping("/signin")
     @ResponseBody
     public ResponseEntity<?> loginManager(@Valid @RequestBody LoginEntity loginEntity){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginEntity.getLogin().toString(),
+                        loginEntity.getPassword()
+                )
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = tokenProvider.generateToken(authentication);
 
         Optional<Manager> manager = managerRepository.findById(loginEntity.getLogin());
-        PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
 
-        if(passwordEncoderConfig.passwordEncoder().matches(loginEntity.getPassword(), manager.get().getPassword())) {
-            return manager.map(response -> ResponseEntity.ok().body(response))
-                    .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", loginEntity.getLogin()));
+        if(passwordEncoder.matches(loginEntity.getPassword(), manager.get().getPassword())) {
+            return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
         } else {
             return new ResponseEntity<>("Unauthorised", HttpStatus.UNAUTHORIZED);
         }

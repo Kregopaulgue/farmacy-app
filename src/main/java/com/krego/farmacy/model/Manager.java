@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -36,4 +37,22 @@ public class Manager {
     @OneToMany(mappedBy = "manager")
     private Set<Drugstore> drugstores;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name="manager_code"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public Manager(long managerCode, String name, String password, String surname, String patronymic,
+                   String address, String phoneNumber, String corporatePhoneNumber, String position) {
+        this.managerCode = managerCode;
+        this.name = name;
+        this.password = password;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.corporatePhoneNumber = corporatePhoneNumber;
+        this.position = position;
+    }
 }
