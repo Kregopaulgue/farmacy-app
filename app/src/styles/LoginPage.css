@@ -1,0 +1,32 @@
+.login {
+    background-color: white;
+}
+
+.loginForm {
+    display: flex;
+    justify-content: center;
+}
+
+.loginForm > form {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 1.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+label > div {
+    width: 25%;
+    font-family: 'Roboto', sans-serif;
+}
+
+input {
+    margin-left: 1em;
+    width: 75%;
+    height: 2em;
+}

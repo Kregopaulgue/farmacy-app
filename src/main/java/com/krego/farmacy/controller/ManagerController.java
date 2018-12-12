@@ -54,10 +54,6 @@ public class ManagerController {
         Optional<Manager> manager = managerRepository.findById(loginEntity.getLogin());
         PasswordEncoderConfig passwordEncoderConfig = new PasswordEncoderConfig();
 
-        if(manager.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         if(passwordEncoderConfig.passwordEncoder().matches(loginEntity.getPassword(), manager.get().getPassword())) {
             return manager.map(response -> ResponseEntity.ok().body(response))
                     .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", loginEntity.getLogin()));
