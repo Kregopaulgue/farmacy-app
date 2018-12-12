@@ -94,7 +94,7 @@ public class ManagerController {
         Manager result = managerRepository.save(manager);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/users/{username}")
+                .fromCurrentContextPath().path("/api/manager/{username}")
                 .buildAndExpand(Long.toString(result.getManagerCode())).toUri();
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
