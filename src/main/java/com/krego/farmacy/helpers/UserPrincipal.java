@@ -39,6 +39,7 @@ public class UserPrincipal implements UserDetails {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.corporatePhoneNumber = corporatePhoneNumber;
+
     }
 
     public static UserPrincipal create(Manager user) {

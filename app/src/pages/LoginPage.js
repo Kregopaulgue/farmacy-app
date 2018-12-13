@@ -35,17 +35,18 @@ class LoginForm extends Component {
                 const loginRequest = Object.assign({}, values);
                 login(loginRequest)
                     .then(response => {
+                        console.log(response);
                         localStorage.setItem(ACCESS_TOKEN, response.accessToken);
                         this.props.onLogin();
                     }).catch(error => {
                     if(error.status === 401) {
                         notification.error({
-                            message: 'Polling App',
+                            message: 'Pharmacy App',
                             description: 'Your Username or Password is incorrect. Please try again!'
                         });
                     } else {
                         notification.error({
-                            message: 'Polling App',
+                            message: 'Pharmacy App',
                             description: error.message || 'Sorry! Something went wrong. Please try again!'
                         });
                     }

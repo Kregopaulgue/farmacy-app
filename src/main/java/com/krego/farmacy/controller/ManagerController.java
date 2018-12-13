@@ -100,14 +100,14 @@ public class ManagerController {
                 manager.getSurname(), manager.getPatronymic(), manager.getAddress(), manager.getPhoneNumber(),
                 manager.getCorporatePhoneNumber(), manager.getPosition());
 
-        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
+        newManager.setPassword(passwordEncoder.encode(manager.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
 
         newManager.setRoles(Collections.singleton(userRole));
 
-        Manager result = managerRepository.save(manager);
+        Manager result = managerRepository.save(newManager);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/manager/{username}")

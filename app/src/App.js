@@ -6,6 +6,7 @@ import { getCurrentUser } from "./apiUtils";
 import { Layout, notification } from 'antd';
 import LoginPage from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
+import AppHeader from './components/AppHeader';
 import './styles/App.css';
 
 const { Content } = Layout;
@@ -40,6 +41,7 @@ class App extends Component {
             isAuthenticated: true,
             isLoading: false
           });
+          console.log(this.state.currentUser);
         }).catch(error => {
       this.setState({
         isLoading: false
@@ -75,10 +77,11 @@ class App extends Component {
   */
   handleLogin() {
     notification.success({
-      message: 'Polling App',
+      message: 'Pharmacy App',
       description: "You're successfully logged in.",
     });
     this.loadCurrentUser();
+
     this.props.history.push("/");
   }
 
@@ -86,20 +89,17 @@ class App extends Component {
     /*<PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}/>*/
     return (
         <Layout className="app-container">
+          <AppHeader isAuthenticated={this.state.isAuthenticated}
+                     currentUser={this.state.currentUser}
+                     onLogout={this.handleLogout} />
+
           <Content className="app-content">
             <div className="container">
               <Switch>
-                {/*<Route exact path="/"*/}
-                       {/*render={(props) => <PollList isAuthenticated={this.state.isAuthenticated}*/}
-                                                    {/*currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>*/}
-                {/*</Route>*/}
+
                 <Route path="/login"
                        render={(props) => <LoginPage onLogin={this.handleLogin} {...props} />}/>
                 <Route path="/signup" component={SignUp}/>
-                {/*<Route path="/drugstores/:managerCode"*/}
-                       {/*render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>*/}
-                {/*</Route>*/}
-                {/*<Route component={NotFound}/>*/}
               </Switch>
             </div>
           </Content>
