@@ -2,11 +2,10 @@ package com.krego.farmacy.controller;
 
 import com.krego.farmacy.exception.AppException;
 import com.krego.farmacy.exception.ResourceNotFoundException;
-import com.krego.farmacy.helpers.JwtTokenProvider;
-import com.krego.farmacy.helpers.LoginEntity;
-import com.krego.farmacy.helpers.RoleName;
+import com.krego.farmacy.helpers.*;
 import com.krego.farmacy.model.Manager;
 import com.krego.farmacy.model.Role;
+import com.krego.farmacy.payloads.ManagerCodeAvailability;
 import com.krego.farmacy.repositories.ManagerRepository;
 
 import com.krego.farmacy.repositories.RoleRepository;
@@ -15,6 +14,7 @@ import com.krego.farmacy.responses.JwtAuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,6 +55,22 @@ public class ManagerController {
         Optional<Manager> manager = managerRepository.findById(managerId);
         return manager.map(response -> ResponseEntity.ok().body(response))
                 .orElseThrow(() -> new ResourceNotFoundException("Manager", "id", managerId));
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('USER')")
+    public Manager getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        Manager userSummary = new Manager(currentUser.getManagerCode(), currentUser.getName(),
+                currentUser.getPassword(), currentUser.getSurname(), currentUser.getPatronymic(),
+                currentUser.getAddress(), currentUser.getPhoneNumber(), currentUser.getCorporatePhoneNumber(), currentUser.getPosition());
+        return userSummary;
+    }
+
+    @GetMapping("/checkManagerCodeAvailability")
+    @ResponseBody
+    public ManagerCodeAvailability checkManagerCodeAvailability(@RequestParam(value = "managerCode") Long code) {
+        Boolean isAvailable = !managerRepository.existsById(code);
+        return new ManagerCodeAvailability(isAvailable);
     }
 
     @GetMapping("/all")

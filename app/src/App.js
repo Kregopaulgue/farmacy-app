@@ -1,18 +1,13 @@
+//eslint-disable import/first
 import React, { Component } from 'react';
-import './styles/App.css';
-
-import {
-  Route,
-  withRouter,
-  Switch
-} from 'react-router-dom';
-
 import { ACCESS_TOKEN } from './constants';
-
+import { Route, withRouter, Switch } from 'react-router-dom';
+import { getCurrentUser } from "./apiUtils";
+import { Layout, notification } from 'antd';
 import LoginPage from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
+import './styles/App.css';
 
-import { Layout, notification } from 'antd';
 const { Content } = Layout;
 
 class App extends Component {
@@ -88,6 +83,7 @@ class App extends Component {
   }
 
   render() {
+    /*<PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}/>*/
     return (
         <Layout className="app-container">
           <Content className="app-content">
@@ -103,7 +99,6 @@ class App extends Component {
                 {/*<Route path="/drugstores/:managerCode"*/}
                        {/*render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>*/}
                 {/*</Route>*/}
-                /*<PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}/>*/
                 {/*<Route component={NotFound}/>*/}
               </Switch>
             </div>

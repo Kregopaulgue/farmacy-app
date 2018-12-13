@@ -4,9 +4,9 @@ import {PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH, USERNAME_MAX_LENGTH, USERNAME_
 import { Link } from 'react-router-dom';
 
 import { Form, Input, Button, notification } from 'antd';
-const FormItem = Form.Item;
-
 import '../styles/SignUp.css';
+
+const FormItem = Form.Item;
 
 class Signup extends Component {
     constructor(props) {
@@ -43,7 +43,6 @@ class Signup extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateUsernameAvailability = this.validateUsernameAvailability.bind(this);
-        this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
         this.isFormInvalid = this.isFormInvalid.bind(this);
     }
 
@@ -64,10 +63,15 @@ class Signup extends Component {
         event.preventDefault();
 
         const signupRequest = {
+            managerCode: this.state.code.value,
+            password: this.state.password.value,
             name: this.state.name.value,
-            email: this.state.email.value,
-            username: this.state.username.value,
-            password: this.state.password.value
+            surname: this.state.surname.value,
+            patronymic: this.state.patronymic.value,
+            address: this.state.address.value,
+            phoneNumber: this.state.phone.value,
+            corporatePhoneNumber: this.state.corporatePhone.value,
+            position: this.state.position.value,
         };
         signup(signupRequest)
             .then(response => {
@@ -112,7 +116,7 @@ class Signup extends Component {
                                 autoComplete="off"
                                 placeholder="Your full name"
                                 value={this.state.name.value}
-                                onChange={(event) => this.handleInputChange(event, this.validateName)} />
+                                onChange={(event) => this.handleInputChange(event, this.validateString)} />
                         </FormItem>
                         <FormItem
                             label="Surname"
@@ -124,7 +128,7 @@ class Signup extends Component {
                                 autoComplete="off"
                                 placeholder="Your full name"
                                 value={this.state.surname.value}
-                                onChange={(event) => this.handleInputChange(event, this.validateName)} />
+                                onChange={(event) => this.handleInputChange(event, this.validateString)} />
                         </FormItem>
                         <FormItem label="Manager Code"
                                   hasFeedback
@@ -247,7 +251,7 @@ class Signup extends Component {
         }
 
         return {
-            validateStatus: null,
+            validateStatus: "success",
             errorMsg: null
         }
     };
@@ -265,7 +269,7 @@ class Signup extends Component {
             }
         } else {
             return {
-                validateStatus: null,
+                validateStatus: 'success',
                 errorMsg: null
             }
         }
@@ -273,7 +277,7 @@ class Signup extends Component {
 
     validateUsernameAvailability() {
         // First check for client side errors in username
-        const usernameValue = this.state.username.value;
+        const usernameValue = this.state.code.value;
         const usernameValidation = this.validateUsername(usernameValue);
 
         if(usernameValidation.validateStatus === 'error') {
@@ -353,7 +357,7 @@ class Signup extends Component {
         }
 
         return {
-            validateStatus: null,
+            validateStatus: 'success',
             errorMsg: null
         }
     }

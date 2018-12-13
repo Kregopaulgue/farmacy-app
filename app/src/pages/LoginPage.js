@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 
 class Login extends Component {
     render() {
-        const AntWrappedLoginForm = Form.create()(LoginForm)
+        const AntWrappedLoginForm = Form.create()(LoginForm);
         return (
             <div className="login-container">
                 <h1 className="page-title">Login</h1>
@@ -59,13 +59,13 @@ class LoginForm extends Component {
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
-                    {getFieldDecorator('usernameOrEmail', {
-                        rules: [{ required: true, message: 'Please input your username or email!' }],
+                    {getFieldDecorator('login', {
+                        rules: [{ required: true, message: 'Please input your code!' }],
                     })(
                         <Input
                             prefix={<Icon type="user" />}
                             size="large"
-                            name="usernameOrEmail"
+                            name="login"
                             placeholder="Username or Email" />
                     )}
                 </FormItem>

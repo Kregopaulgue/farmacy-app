@@ -25,7 +25,7 @@ const request = (options) => {
 
 export function login(loginRequest) {
     return request({
-        url: API_BASE_URL + "/manager/signin",
+        url: 'api/manager/signin',
         method: 'POST',
         body: JSON.stringify(loginRequest)
     });
@@ -33,15 +33,16 @@ export function login(loginRequest) {
 
 export function signup(signupRequest) {
     return request({
-        url: API_BASE_URL + "/manager/signup",
+        url: 'api/manager/signup',
         method: 'POST',
         body: JSON.stringify(signupRequest)
     });
 }
 
 export function checkUsernameAvailability(username) {
+    console.log(username);
     return request({
-        url: API_BASE_URL + "/user/checkUsernameAvailability?username=" + username,
+        url: "api/manager/checkManagerCodeAvailability?managerCode=" + username,
         method: 'GET'
     });
 }
@@ -53,7 +54,7 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/user/me",
+        url: 'api/manager/me',
         method: 'GET'
     });
 }
