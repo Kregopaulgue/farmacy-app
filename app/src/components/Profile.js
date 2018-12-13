@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { getUserProfile } from '../apiUtils';
 import { Avatar, Tabs } from 'antd';
 import DrugstoresList from './DrugstoresPage/DrugstoresList'
+import MedicineList from './MedicinePage/MedicineList'
+import SoldsList from './SoldsPage/SoldsList'
 import { getAvatarColor } from '../helpers/Colors';
 import LoadingIndicator  from './LoadingIndicator';
 import ServerError from './ServerError';
@@ -103,7 +105,7 @@ class Profile extends Component {
 
                                     </TabPane>
                                     <TabPane tab={`Medicine`}  key="3">
-
+                                        <SoldsList username={this.state.user.managerCode}/>
                                     </TabPane>
                                 </Tabs>
                             </div>

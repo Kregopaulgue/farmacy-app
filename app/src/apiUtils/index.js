@@ -73,3 +73,19 @@ export function getManagerDrugstores(username) {
         method: 'GET'
     });
 }
+
+export function getManagerMedicine(username) {
+    console.log('In medicine server: ' + username);
+    return request({
+        url: "/api/medicine/manager?managerCode=" + username,
+        method: 'GET'
+    });
+}
+
+export function getManagerSolds(username) {
+    console.log('In solds server: ' + username);
+    return request({
+        url: "/api/sold/manager?managerCode=" + username,
+        method: 'GET'
+    });
+}

@@ -1,30 +1,29 @@
 import React, { Component } from 'react';
 import EditableTable from '../EditableTable';
-import { getManagerMedicine } from "../../apiUtils";
+import { getManagerSolds } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
 
-class MedicineList extends Component {
+class SoldsList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            loadedMedicine: null,
+            loadedSolds: null,
             isLoading: false
         }
     }
 
-    getCurrentUserMedicine = () => {
+    getCurrentUserDrugstores = () => {
         this.setState({
             isLoading: true
         });
-        console.log("Im in medicine")
-        getManagerMedicine(this.props.username)
+        getManagerSolds(this.props.username)
             .then((response) => {
                 console.log(response);
                 this.setState({
-                    loadedMedicine: response.content,
+                    loadedSolds: response.content,
                     isLoading: false
                 });
             }) .catch(
@@ -45,7 +44,8 @@ class MedicineList extends Component {
     };
 
     componentDidMount() {
-        this.getCurrentUserMedicine();
+        console.log('Im in solds');
+        this.getCurrentUserDrugstores();
     };
 
     render() {
@@ -106,4 +106,4 @@ class MedicineList extends Component {
 
 }
 
-export default MedicineList;
+export default SoldsList;
