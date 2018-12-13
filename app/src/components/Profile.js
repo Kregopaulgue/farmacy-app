@@ -102,10 +102,10 @@ class Profile extends Component {
                                         <DrugstoresList username={this.state.user.managerCode}/>
                                     </TabPane>
                                     <TabPane tab={`Solds`}  key="2">
-
+                                        <SoldsList username={this.state.user.managerCode}/>
                                     </TabPane>
                                     <TabPane tab={`Medicine`}  key="3">
-                                        <SoldsList username={this.state.user.managerCode}/>
+
                                     </TabPane>
                                 </Tabs>
                             </div>

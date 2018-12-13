@@ -12,9 +12,8 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
     Page<Medicine> findByManufacturerCode(Long manufacturerCode, Pageable pageable);
 
-//    @Query(value = "SELECT * FROM medicine med WHERE med.medicine_code" +
-//            " IN(SELECT sold.medicine_code FROM sold_in_period sold WHERE sold.drugstore_code IN" +
-//            "(SELECT drug.drugstore_code FROM drugstore drug WHERE drug.manager_code = ?managerCode))", nativeQuery = true)
-//    Page<Medicine> findByManagerCode(Long managerCode, Pageable pageable);
-
+    @Query(value = "SELECT * FROM medicine med WHERE med.medicine_code" +
+            " IN(SELECT sold.medicine_code FROM sold_in_period sold WHERE sold.drugstore_code IN" +
+            "(SELECT drug.drugstore_code FROM drugstore drug WHERE drug.manager_code = ?managerCode))", nativeQuery = true)
+    Page<Medicine> findByManagerCode(Long managerCode, Pageable pageable);
 }

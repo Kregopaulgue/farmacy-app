@@ -1,5 +1,6 @@
 package com.krego.farmacy.repositories;
 
+import com.krego.farmacy.model.Medicine;
 import com.krego.farmacy.model.SoldInPeriod;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

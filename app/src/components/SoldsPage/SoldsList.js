@@ -62,29 +62,17 @@ class SoldsList extends Component {
             return <ServerError />;
         }
 
-        const { loadedDrugstores } = this.state;
+        const { loadedSolds } = this.state;
         const textColumns = [
             {
-                title: 'Title',
-                dataIndex: 'networkTitle',
+                title: 'Period Start',
+                dataIndex: 'periodStart',
                 width: '15%',
                 editable: true,
             },
             {
-                title: 'Address',
-                dataIndex: 'address',
-                width: '15%',
-                editable: true,
-            },
-            {
-                title: 'Phone',
-                dataIndex: 'phoneNumber',
-                width: '15%',
-                editable: true,
-            },
-            {
-                title: 'Region',
-                dataIndex: 'region',
+                title: 'Period End',
+                dataIndex: 'periodEnd',
                 width: '15%',
                 editable: true,
             },
@@ -92,15 +80,25 @@ class SoldsList extends Component {
 
         const numberColumns = [
             {
-                title: 'Code',
-                dataIndex: 'drugstoreCode',
+                title: 'Sold Id',
+                dataIndex: 'soldId',
+                width: '15%',
+                editable: true,
+            }, {
+                title: 'Sum',
+                dataIndex: 'sum',
+                width: '15%',
+                editable: true,
+            }, {
+                title: 'Amount',
+                dataIndex: 'amount',
                 width: '15%',
                 editable: true,
             },
         ];
 
         return(
-            <EditableTable numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedDrugstores}/>
+            <EditableTable numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds}/>
         );
     }
 
