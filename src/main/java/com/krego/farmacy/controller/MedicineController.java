@@ -6,6 +6,8 @@ import com.krego.farmacy.repositories.ManagerRepository;
 import com.krego.farmacy.repositories.ManufacturerRepository;
 import com.krego.farmacy.repositories.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +31,12 @@ public class MedicineController {
         return medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));
     }
+
+//    @GetMapping("/manager")
+//    @ResponseBody
+//    public Page<Medicine> getMedicineByManagerCode(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
+//        return medicineRepository.findByManagerCode(managerCode, pageable);
+//    }
 
     @GetMapping("/all")
     @ResponseBody

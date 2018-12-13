@@ -8,6 +8,8 @@ import com.krego.farmacy.repositories.DrugstoreRepository;
 import com.krego.farmacy.repositories.MedicineRepository;
 import com.krego.farmacy.repositories.SoldInPeriodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,14 @@ public class SoldInPeriodController {
     public SoldInPeriod getSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
         return soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
+    }
+
+    @GetMapping("/manager")
+    @ResponseBody
+    public Page<SoldInPeriod> getAllSoldInPeriods(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
+
+        return soldInPeriodRepository.findByDrugstore_ManagerManagerCode(managerCode, pageable);
+
     }
 
     @GetMapping("/all")

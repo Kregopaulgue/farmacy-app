@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SoldInPeriodRepository extends JpaRepository<SoldInPeriod, Long> {
 
+    Page<SoldInPeriod> findByDrugstore_ManagerManagerCode(Long managerCode, Pageable pageable);
     Page<SoldInPeriod> findByDrugstoreDrugstoreCode(Long drugstoreCode, Pageable pageable);
     Page<SoldInPeriod> findByMedicineMedicineCode(Long medicineCode, Pageable pageable);
 
