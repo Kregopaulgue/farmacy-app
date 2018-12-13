@@ -51,6 +51,7 @@ public class ManagerController {
     //GET mappings
     @GetMapping("/get")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getManagerById(@RequestParam("managerCode") Long managerId) {
         Optional<Manager> manager = managerRepository.findById(managerId);
         return manager.map(response -> ResponseEntity.ok().body(response))

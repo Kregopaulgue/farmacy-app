@@ -7,6 +7,7 @@ import { Layout, notification } from 'antd';
 import LoginPage from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
 import AppHeader from './components/AppHeader';
+import Profile from './components/Profile';
 import './styles/App.css';
 
 const { Content } = Layout;
@@ -96,10 +97,12 @@ class App extends Component {
           <Content className="app-content">
             <div className="container">
               <Switch>
-
                 <Route path="/login"
                        render={(props) => <LoginPage onLogin={this.handleLogin} {...props} />}/>
                 <Route path="/signup" component={SignUp}/>
+                <Route path="/managers/:username"
+                       render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                </Route>
               </Switch>
             </div>
           </Content>

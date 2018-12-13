@@ -61,7 +61,15 @@ export function getCurrentUser() {
 
 export function getUserProfile(username) {
     return request({
-        url: "/api/manager/" + username,
+        url: "/api/manager/get?managerCode=" + username,
+        method: 'GET'
+    });
+}
+
+export function getManagerDrugstores(username) {
+    console.log('In server: ' + username);
+    return request({
+        url: "/api/drugstore/manager?managerCode=" + username,
         method: 'GET'
     });
 }
