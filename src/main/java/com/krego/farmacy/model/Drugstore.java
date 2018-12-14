@@ -34,7 +34,7 @@ public class Drugstore {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_code", nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     private Manager manager;
 
     @JsonIgnore

@@ -7,15 +7,22 @@ import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
 import '../../styles/DataTable.css'
 
+import AddDrugstore from '../../components/AddForms/AddDrugstore';
+
 class DrugstoresList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             loadedDrugstores: null,
-            isLoading: false
+            isLoading: false,
+            toAdd: false,
         }
     }
+
+    onAdd = () => {
+        this.setState({toAdd: true})
+    };
 
     getCurrentUserDrugstores = () => {
         this.setState({
@@ -100,12 +107,15 @@ class DrugstoresList extends Component {
             },
         ];
 
+        const { toAdd } = this.state;
+
         return(
             <div className="containerForTable">
                 <div className="dataTable">
                     <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedDrugstores}/>
                 </div>
-                <Button className="updateButton">Update</Button>
+                <Button className="updateButton" onClick={this.onAdd}>Add</Button>
+                { toAdd && <AddDrugstore/>}
             </div>
         );
     }

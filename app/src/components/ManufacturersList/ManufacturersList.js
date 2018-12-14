@@ -6,6 +6,7 @@ import NotFound from '../NotFound';
 import '../../styles/DataTable.css'
 import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
+import AddManufacturer from '../../components/AddForms/AddManufacturer';
 
 class ManufacturersList extends Component {
 
@@ -13,9 +14,14 @@ class ManufacturersList extends Component {
         super(props);
         this.state = {
             loadedManufacturers: null,
-            isLoading: false
+            isLoading: false,
+            toAdd: false,
         }
     }
+
+    onAdd = () => {
+        this.setState({toAdd: true})
+    };
 
     getCurrentUserMedicine = () => {
         this.setState({
@@ -97,12 +103,15 @@ class ManufacturersList extends Component {
             },
         ];
 
+        const { toAdd } = this.state;
+
         return(
             <div className="containerForTable">
                 <div className="dataTable">
                     <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers}/>
                 </div>
-                <Button className="updateButton">Update</Button>
+                <Button className="updateButton" onClick={this.onAdd}>Add</Button>
+                { toAdd && <AddManufacturer/>}
             </div>
         );
     }

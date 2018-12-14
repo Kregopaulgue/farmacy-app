@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EditableTable from '../EditableTable';
 import { getManagerMedicine } from "../../apiUtils";
+import AddMedicine from '../../components/AddForms/AddMedicine';
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
@@ -13,7 +14,8 @@ class MedicineList extends Component {
         super(props);
         this.state = {
             loadedMedicine: null,
-            isLoading: false
+            isLoading: false,
+            toAdd: false,
         }
     }
 
@@ -48,6 +50,10 @@ class MedicineList extends Component {
 
     componentDidMount() {
         this.getCurrentUserMedicine();
+    };
+
+    onAdd = () => {
+        this.setState({toAdd: true})
     };
 
     render() {
@@ -101,12 +107,15 @@ class MedicineList extends Component {
             },
         ];
 
+        const { toAdd } = this.state;
+
         return(
             <div className="containerForTable">
                 <div className="dataTable">
                     <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedMedicine}/>
                 </div>
-                <Button className="updateButton">Update</Button>
+                <Button className="updateButton" onClick={this.onAdd}>Add</Button>
+                { toAdd && <AddMedicine/>}
             </div>
         );
     }

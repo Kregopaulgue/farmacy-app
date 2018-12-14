@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -29,13 +30,14 @@ public class Medicine {
     @Column(name = "measurement_unit")
     private String measurementUnit;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manufacturer_code", nullable = false)
     private Manufacturer manufacturer;
 
     @JsonIgnore
     @OneToMany(mappedBy = "medicine")
+    @Nullable
     private Set<SoldInPeriod> soldInPeriods;
 
     @JsonIgnore

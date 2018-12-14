@@ -29,12 +29,12 @@ public class SoldInPeriod {
     private double sum;
     private int amount;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "drugstore_code", nullable = false)
     private Drugstore drugstore;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "medicine_code", nullable = false)
     private Medicine medicine;

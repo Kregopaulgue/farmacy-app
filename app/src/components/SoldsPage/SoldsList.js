@@ -6,6 +6,7 @@ import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
 import '../../styles/DataTable.css'
+import AddSoldInPeriods from '../../components/AddForms/AddSoldInPeriods';
 
 class SoldsList extends Component {
 
@@ -13,9 +14,14 @@ class SoldsList extends Component {
         super(props);
         this.state = {
             loadedSolds: null,
-            isLoading: false
+            isLoading: false,
+            toAdd: false,
         }
     }
+
+    onAdd = () => {
+        this.setState({toAdd: true})
+    };
 
     getCurrentUserDrugstores = () => {
         this.setState({
@@ -99,12 +105,15 @@ class SoldsList extends Component {
             },
         ];
 
+        const { toAdd } = this.state;
+
         return(
             <div className="containerForTable">
                 <div className="dataTable">
                     <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds}/>
                 </div>
-                <Button className="updateButton">Update</Button>
+                <Button className="updateButton" onClick={this.onAdd}>Add</Button>
+                { toAdd && <AddSoldInPeriods/>}
             </div>
         );
     }
