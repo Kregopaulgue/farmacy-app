@@ -1,11 +1,14 @@
 package com.krego.farmacy.repositories;
 
+import com.krego.farmacy.model.Drugstore;
 import com.krego.farmacy.model.Medicine;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, Long> {
@@ -14,6 +17,10 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
 
     @Query(value = "SELECT * FROM medicine med WHERE med.medicine_code" +
             " IN(SELECT sold.medicine_code FROM sold_in_period sold WHERE sold.drugstore_code IN" +
-            "(SELECT drug.drugstore_code FROM drugstore drug WHERE drug.manager_code = ?managerCode))", nativeQuery = true)
+            "(SELECT drug.drugstore_code FROM drugstore drug WHERE drug.manager_code = ?1))", nativeQuery = true)
     Page<Medicine> findByManagerCode(Long managerCode, Pageable pageable);
+
+
+//    @Query("select med from Medicine med join med.drugstores drug where drug.drugstore_code = ?1")
+//    Page<Medicine> findAllByDrugstoreCode(Long drugstoreCode, Pageable pageable);
 }

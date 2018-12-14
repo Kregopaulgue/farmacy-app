@@ -4,6 +4,8 @@ import { getManagerMedicine } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
+import { Button } from "antd";
+import '../../styles/DataTable.css'
 
 class MedicineList extends Component {
 
@@ -62,45 +64,50 @@ class MedicineList extends Component {
             return <ServerError />;
         }
 
-        const { loadedDrugstores } = this.state;
+        const { loadedMedicine } = this.state;
         const textColumns = [
             {
                 title: 'Title',
-                dataIndex: 'networkTitle',
+                dataIndex: 'title',
                 width: '15%',
                 editable: true,
             },
             {
-                title: 'Address',
-                dataIndex: 'address',
+                title: 'Expiration Term',
+                dataIndex: 'expirationTerm',
                 width: '15%',
                 editable: true,
-            },
-            {
-                title: 'Phone',
-                dataIndex: 'phoneNumber',
-                width: '15%',
-                editable: true,
-            },
-            {
-                title: 'Region',
-                dataIndex: 'region',
+            }, {
+                title: 'Measurement Unit',
+                dataIndex: 'measurementUnit',
                 width: '15%',
                 editable: true,
             },
         ];
 
+
+        //medicineCode: 1, title: "Aspirin", expirationTerm: "23/10/1999", price: 34, measurementUnit: "3
         const numberColumns = [
             {
-                title: 'Code',
-                dataIndex: 'drugstoreCode',
+                title: 'Medicine Code',
+                dataIndex: 'medicineCode',
+                width: '15%',
+                editable: true,
+            }, {
+                title: 'Price',
+                dataIndex: 'price',
                 width: '15%',
                 editable: true,
             },
         ];
 
         return(
-            <EditableTable numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedDrugstores}/>
+            <div className="containerForTable">
+                <div className="dataTable">
+                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedMedicine}/>
+                </div>
+                <Button className="updateButton">Update</Button>
+            </div>
         );
     }
 

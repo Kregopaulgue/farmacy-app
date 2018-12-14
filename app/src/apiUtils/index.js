@@ -89,3 +89,11 @@ export function getManagerSolds(username) {
         method: 'GET'
     });
 }
+
+export function getAllManufacturers(username) {
+    console.log('In manufacturers server: ' + username);
+    return request({
+        url: "/api/manufacturer/all",
+        method: 'GET'
+    });
+}

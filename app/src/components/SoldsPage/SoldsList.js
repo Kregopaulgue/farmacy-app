@@ -4,6 +4,8 @@ import { getManagerSolds } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
+import { Button } from "antd";
+import '../../styles/DataTable.css'
 
 class SoldsList extends Component {
 
@@ -98,7 +100,12 @@ class SoldsList extends Component {
         ];
 
         return(
-            <EditableTable numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds}/>
+            <div className="containerForTable">
+                <div className="dataTable">
+                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds}/>
+                </div>
+                <Button className="updateButton">Update</Button>
+            </div>
         );
     }
 

@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import EditableTable from '../EditableTable';
-import { getManagerDrugstores } from "../../apiUtils";
+import { getAllManufacturers } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
+import '../../styles/DataTable.css'
 import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
-import '../../styles/DataTable.css'
 
-class DrugstoresList extends Component {
+class ManufacturersList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            loadedDrugstores: null,
+            loadedManufacturers: null,
             isLoading: false
         }
     }
 
-    getCurrentUserDrugstores = () => {
+    getCurrentUserMedicine = () => {
         this.setState({
             isLoading: true
         });
-        getManagerDrugstores(this.props.username)
+        console.log("Im in medicine")
+        getAllManufacturers(this.props.username)
             .then((response) => {
                 console.log(response);
                 this.setState({
-                    loadedDrugstores: response.content,
+                    loadedManufacturers: response,
                     isLoading: false
                 });
             }) .catch(
@@ -46,7 +47,7 @@ class DrugstoresList extends Component {
     };
 
     componentDidMount() {
-        this.getCurrentUserDrugstores();
+        this.getCurrentUserMedicine();
     };
 
     render() {
@@ -63,17 +64,12 @@ class DrugstoresList extends Component {
             return <ServerError />;
         }
 
-        const { loadedDrugstores } = this.state;
+        const { loadedManufacturers } = this.state;
+        console.log(loadedManufacturers);
         const textColumns = [
             {
-                title: 'Title',
-                dataIndex: 'networkTitle',
-                width: '15%',
-                editable: true,
-            },
-            {
-                title: 'Address',
-                dataIndex: 'address',
+                title: 'Firm Title',
+                dataIndex: 'firmTitle',
                 width: '15%',
                 editable: true,
             },
@@ -82,19 +78,20 @@ class DrugstoresList extends Component {
                 dataIndex: 'phoneNumber',
                 width: '15%',
                 editable: true,
-            },
-            {
-                title: 'Region',
-                dataIndex: 'region',
+            }, {
+                title: 'Address',
+                dataIndex: 'address',
                 width: '15%',
                 editable: true,
             },
         ];
 
+
+        //medicineCode: 1, title: "Aspirin", expirationTerm: "23/10/1999", price: 34, measurementUnit: "3
         const numberColumns = [
             {
-                title: 'Code',
-                dataIndex: 'drugstoreCode',
+                title: 'Manufacturer Code',
+                dataIndex: 'code',
                 width: '15%',
                 editable: true,
             },
@@ -103,7 +100,7 @@ class DrugstoresList extends Component {
         return(
             <div className="containerForTable">
                 <div className="dataTable">
-                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedDrugstores}/>
+                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers}/>
                 </div>
                 <Button className="updateButton">Update</Button>
             </div>
@@ -112,4 +109,4 @@ class DrugstoresList extends Component {
 
 }
 
-export default DrugstoresList;
+export default ManufacturersList;

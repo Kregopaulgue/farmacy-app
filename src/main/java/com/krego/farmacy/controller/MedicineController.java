@@ -1,7 +1,9 @@
 package com.krego.farmacy.controller;
 
 import com.krego.farmacy.exception.ResourceNotFoundException;
+import com.krego.farmacy.model.Drugstore;
 import com.krego.farmacy.model.Medicine;
+import com.krego.farmacy.repositories.DrugstoreRepository;
 import com.krego.farmacy.repositories.ManagerRepository;
 import com.krego.farmacy.repositories.ManufacturerRepository;
 import com.krego.farmacy.repositories.MedicineRepository;
@@ -24,6 +26,9 @@ public class MedicineController {
     @Autowired
     ManufacturerRepository manufacturerRepository;
 
+    @Autowired
+    DrugstoreRepository drugstoreRepository;
+
     //GET mappings
     @GetMapping("/get")
     @ResponseBody
@@ -32,11 +37,11 @@ public class MedicineController {
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));
     }
 
-//    @GetMapping("/manager")
-//    @ResponseBody
-//    public Page<Medicine> getMedicineByManagerCode(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
-//        return medicineRepository.findByManagerCode(managerCode, pageable);
-//    }
+    @GetMapping("/manager")
+    @ResponseBody
+    public Page<Medicine> getMedicineByManagerCode(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
+        return medicineRepository.findByManagerCode(managerCode, pageable);
+    }
 
     @GetMapping("/all")
     @ResponseBody

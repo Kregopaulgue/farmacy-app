@@ -4,6 +4,7 @@ import { Avatar, Tabs } from 'antd';
 import DrugstoresList from './DrugstoresPage/DrugstoresList'
 import MedicineList from './MedicinePage/MedicineList'
 import SoldsList from './SoldsPage/SoldsList'
+import ManufacturersList from './ManufacturersList/ManufacturersList'
 import { getAvatarColor } from '../helpers/Colors';
 import LoadingIndicator  from './LoadingIndicator';
 import ServerError from './ServerError';
@@ -105,7 +106,10 @@ class Profile extends Component {
                                         <SoldsList username={this.state.user.managerCode}/>
                                     </TabPane>
                                     <TabPane tab={`Medicine`}  key="3">
-
+                                        <MedicineList username={this.state.user.managerCode}/>
+                                    </TabPane>
+                                    <TabPane tab={`Manufacturers`}  key="4">
+                                        <ManufacturersList username={this.state.user.managerCode}/>
                                     </TabPane>
                                 </Tabs>
                             </div>
