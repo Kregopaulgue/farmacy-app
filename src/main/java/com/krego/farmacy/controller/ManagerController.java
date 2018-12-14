@@ -152,9 +152,6 @@ public class ManagerController {
         manager.setAddress(managerDetails.getAddress());
         manager.setCorporatePhoneNumber(managerDetails.getCorporatePhoneNumber());
 
-        //may cause problems
-        manager.setDrugstores(managerDetails.getDrugstores());
-
         manager.setName(managerDetails.getName());
         manager.setPatronymic(managerDetails.getPatronymic());
         manager.setSurname(managerDetails.getSurname());

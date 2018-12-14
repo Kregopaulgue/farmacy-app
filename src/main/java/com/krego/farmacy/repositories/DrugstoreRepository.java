@@ -15,4 +15,6 @@ public interface DrugstoreRepository extends JpaRepository<Drugstore, Long> {
     Page<Drugstore> findByManagerManagerCode(Long managerCode, Pageable pageable);
     List<Drugstore> findAllByManagerManagerCode(Long managerCode);
 
+    Drugstore findByDrugstoreCode(Long drugstoreCode);
+
 }

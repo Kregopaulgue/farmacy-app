@@ -80,10 +80,6 @@ public class SoldInPeriodController {
         soldInPeriod.setPeriodEnd(soldInPeriodDetails.getPeriodEnd());
         soldInPeriod.setSum(soldInPeriodDetails.getSum());
 
-        //may cause problems
-        soldInPeriod.setDrugstore(soldInPeriodDetails.getDrugstore());
-        soldInPeriod.setMedicine(soldInPeriodDetails.getMedicine());
-
         return soldInPeriodRepository.save(soldInPeriod);
 
     }

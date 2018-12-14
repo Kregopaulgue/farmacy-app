@@ -20,6 +20,7 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
             "(SELECT drug.drugstore_code FROM drugstore drug WHERE drug.manager_code = ?1))", nativeQuery = true)
     Page<Medicine> findByManagerCode(Long managerCode, Pageable pageable);
 
+    Medicine findByMedicineCode(Long medicineCode);
 
 //    @Query("select med from Medicine med join med.drugstores drug where drug.drugstore_code = ?1")
 //    Page<Medicine> findAllByDrugstoreCode(Long drugstoreCode, Pageable pageable);

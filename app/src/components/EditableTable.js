@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Input, Button, Popconfirm, Form, InputNumber } from 'antd';
-
+import { updateRow } from "../apiUtils";
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -118,6 +118,8 @@ class EditableTable extends React.Component {
                     ...row,
                 });
                 this.setState({ data: newData, editingKey: '' });
+                console.log('New Data: ' + newData);
+                updateRow(newData[index]);
             } else {
                 newData.push(row);
                 this.setState({ data: newData, editingKey: '' });

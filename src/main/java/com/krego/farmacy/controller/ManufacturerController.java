@@ -51,9 +51,6 @@ public class ManufacturerController {
         manufacturer.setFirmTitle(manufacturerDetails.getFirmTitle());
         manufacturer.setPhoneNumber(manufacturerDetails.getPhoneNumber());
 
-        //may cause problems
-        manufacturer.setMedicines(manufacturerDetails.getMedicines());
-
         return manufacturerRepository.save(manufacturer);
 
     }

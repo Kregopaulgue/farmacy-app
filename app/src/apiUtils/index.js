@@ -97,3 +97,52 @@ export function getAllManufacturers(username) {
         method: 'GET'
     });
 }
+
+export function updateRow(payload) {
+    console.log(payload);
+    if(payload.drugstoreCode) {
+        updateDrugstore(payload);
+    } else if(payload.medicineCode) {
+        updateMedicine(payload)
+    } else if(payload.soldId) {
+        updateSoldInPeriod(payload)
+    } else if(payload.code) {
+        updateManufacturer(payload)
+    }
+}
+
+function updateDrugstore(payload) {
+    console.log('In update drugstore server: ' + payload);
+    return request({
+        url: "/api/drugstore/update?drugstoreCode=" + payload.drugstoreCode,
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
+}
+
+function updateManufacturer(payload) {
+    console.log('In update manufacturer server: ' + payload);
+    return request({
+        url: "/api/manufacturer/update?manufacturerCode=" + payload.code,
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
+}
+
+function updateMedicine(payload) {
+    console.log('In update medicine server: ' + payload);
+    return request({
+        url: "/api/medicine/update?medicineCode=" + payload.medicineCode,
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
+}
+
+function updateSoldInPeriod(payload) {
+    console.log('In update medicine server: ' + payload);
+    return request({
+        url: "/api/sold/update?soldInPeriodCode=" + payload.soldId,
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
+}

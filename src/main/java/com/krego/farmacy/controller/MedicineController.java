@@ -73,10 +73,6 @@ public class MedicineController {
         medicine.setMeasurementUnit(medicineDetails.getMeasurementUnit());
         medicine.setPrice(medicineDetails.getPrice());
 
-        //may cause problems
-        medicine.setManufacturer(medicineDetails.getManufacturer());
-        medicine.setSoldInPeriods(medicineDetails.getSoldInPeriods());
-
         return medicineRepository.save(medicine);
 
     }

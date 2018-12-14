@@ -14,4 +14,6 @@ public interface SoldInPeriodRepository extends JpaRepository<SoldInPeriod, Long
     Page<SoldInPeriod> findByDrugstoreDrugstoreCode(Long drugstoreCode, Pageable pageable);
     Page<SoldInPeriod> findByMedicineMedicineCode(Long medicineCode, Pageable pageable);
 
+    SoldInPeriod findAllBySoldId(Long soldId);
+
 }

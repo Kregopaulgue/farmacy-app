@@ -71,10 +71,6 @@ public class DrugstoreController {
         Drugstore.setPhoneNumber(drugstoreDetails.getPhoneNumber());
         Drugstore.setRegion(drugstoreDetails.getRegion());
 
-        //may cause problems
-        Drugstore.setManager(drugstoreDetails.getManager());
-        Drugstore.setSoldInPeriods(drugstoreDetails.getSoldInPeriods());
-
         return drugstoreRepository.save(Drugstore);
 
     }

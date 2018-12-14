@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
     Optional<Manager> findByManagerCode(Long code);
+
+    Manager findAllByManagerCode(Long code);
 }
