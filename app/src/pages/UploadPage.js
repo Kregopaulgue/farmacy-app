@@ -7,7 +7,7 @@ import '../styles/UploadPage.css'
 
 const props = {
     name: 'file',
-    action: '/api/',
+    action: '/api/sold/upload',
     headers: {
         authorization: 'authorization-text',
     },

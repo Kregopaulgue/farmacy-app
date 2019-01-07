@@ -7,13 +7,19 @@ import com.krego.farmacy.model.SoldInPeriod;
 import com.krego.farmacy.repositories.DrugstoreRepository;
 import com.krego.farmacy.repositories.MedicineRepository;
 import com.krego.farmacy.repositories.SoldInPeriodRepository;
+import com.krego.farmacy.upload.FileStorageService;
+import com.krego.farmacy.upload.UploadFileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -28,6 +34,9 @@ public class SoldInPeriodController {
 
     @Autowired
     MedicineRepository medicineRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     //GET mappings
     @GetMapping("/get")
@@ -52,6 +61,20 @@ public class SoldInPeriodController {
     }
 
     //POST mappings
+    @PostMapping("/upload")
+    public UploadFileResponse uploadSoldInPeriod(@RequestParam("file") MultipartFile file) {
+
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
     @PostMapping("/new")
     @ResponseBody
     public SoldInPeriod createSoldInPeriod(@RequestParam("drugstoreCode") Long drugstoreCode,
