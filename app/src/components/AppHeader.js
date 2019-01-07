@@ -30,7 +30,7 @@ class AppHeader extends Component {
                     </Link>
                 </Menu.Item>,
                 <Menu.Item key="/poll/new">
-                    <Link to="/poll/new">
+                    <Link to="/upload">
                         <img src={pollIcon} alt="poll" className="poll-icon" />
                     </Link>
                 </Menu.Item>,

@@ -6,6 +6,7 @@ import { getCurrentUser } from "./apiUtils";
 import { Layout, notification } from 'antd';
 import LoginPage from './pages/LoginPage';
 import SignUp from './pages/SignUpPage';
+import UploadPage from './pages/UploadPage';
 import AppHeader from './components/AppHeader';
 import Profile from './components/Profile';
 import './styles/App.css';
@@ -102,6 +103,9 @@ class App extends Component {
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/managers/:username"
                        render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                </Route>
+                <Route path="/upload"
+                       render={(props) => <UploadPage {...props} />}>
                 </Route>
               </Switch>
             </div>
