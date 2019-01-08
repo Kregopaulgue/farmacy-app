@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Icon, notification } from 'antd';
-import {Link} from "react-router-dom";
 import '../../styles/LoginPage.css';
-import {login} from "../../apiUtils";
-import {ACCESS_TOKEN} from "../../constants";
+import {addRow} from '../../apiUtils';
+
 const FormItem = Form.Item;
 
 class AddMedicine extends Component {
@@ -31,6 +30,7 @@ class AddMedicineForm extends Component {
             if (!err) {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
+                addRow(newMedicine);
             }
         });
     }
@@ -41,7 +41,7 @@ class AddMedicineForm extends Component {
           <div>
               <Form onSubmit={this.handleSubmit} className="login-form">
                   <FormItem>
-                      {getFieldDecorator('Medicine Code', {
+                      {getFieldDecorator('medicineCode', {
                           rules: [{ required: true, message: 'Please input medicine code!' }],
                       })(
                           <Input
@@ -52,7 +52,7 @@ class AddMedicineForm extends Component {
                       )}
                   </FormItem>
                   <FormItem>
-                      {getFieldDecorator('Title', {
+                      {getFieldDecorator('title', {
                           rules: [{ required: true, message: 'Please input title!' }],
                       })(
                           <Input
@@ -64,7 +64,7 @@ class AddMedicineForm extends Component {
                       )}
                   </FormItem>
                   <FormItem>
-                      {getFieldDecorator('Expiration Term', {
+                      {getFieldDecorator('expirationTerm', {
                           rules: [{ required: true, message: 'Please input expiration term!' }],
                       })(
                           <Input
@@ -88,7 +88,7 @@ class AddMedicineForm extends Component {
                       )}
                   </FormItem>
                   <FormItem>
-                      {getFieldDecorator('Manufacturer Code', {
+                      {getFieldDecorator('manufacturerCode', {
                           rules: [{ required: true, message: 'Please input manufacturer code!' }],
                       })(
                           <Input

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Icon, notification } from 'antd';
-import {Link} from "react-router-dom";
 import '../../styles/LoginPage.css';
-import {login} from "../../apiUtils";
-import {ACCESS_TOKEN} from "../../constants";
+import {addRow} from '../../apiUtils';
+
 const FormItem = Form.Item;
 
 class AddSoldInPeriod extends Component {
@@ -31,6 +30,7 @@ class AddSoldInPeriodForm extends Component {
             if (!err) {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
+                addRow(newMedicine);
             }
         });
     }

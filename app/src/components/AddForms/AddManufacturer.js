@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Icon, notification } from 'antd';
-import {Link} from "react-router-dom";
 import '../../styles/LoginPage.css';
-import {login} from "../../apiUtils";
-import {ACCESS_TOKEN} from "../../constants";
-const FormItem = Form.Item;
+import {addRow} from '../../apiUtils';
 
+const FormItem = Form.Item;
 class AddManufacturer extends Component {
     render() {
         const AntWrappedLoginForm = Form.create()(AddManufacturerForm);
@@ -31,6 +29,7 @@ class AddManufacturerForm extends Component {
             if (!err) {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
+                addRow(newMedicine);
             }
         });
     }
@@ -41,7 +40,7 @@ class AddManufacturerForm extends Component {
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <FormItem>
-                        {getFieldDecorator('Manufacturer Code', {
+                        {getFieldDecorator('code', {
                             rules: [{ required: true, message: 'Please input medicine code!' }],
                         })(
                             <Input
@@ -52,7 +51,7 @@ class AddManufacturerForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Firm Title', {
+                        {getFieldDecorator('firmTitle', {
                             rules: [{ required: true, message: 'Please input title!' }],
                         })(
                             <Input
@@ -64,7 +63,7 @@ class AddManufacturerForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Address', {
+                        {getFieldDecorator('address', {
                             rules: [{ required: true, message: 'Please input expiration term!' }],
                         })(
                             <Input
@@ -76,7 +75,7 @@ class AddManufacturerForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Phone Number', {
+                        {getFieldDecorator('phoneNumber', {
                             rules: [{ required: true, message: 'Please input measurement unit!' }],
                         })(
                             <Input

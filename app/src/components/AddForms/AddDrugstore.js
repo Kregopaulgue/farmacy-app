@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, Icon, notification } from 'antd';
-import {Link} from "react-router-dom";
 import '../../styles/LoginPage.css';
-import {login} from "../../apiUtils";
-import {ACCESS_TOKEN} from "../../constants";
+import {addRow} from '../../apiUtils';
+
 const FormItem = Form.Item;
 
 class AddDrugstore extends Component {
@@ -31,6 +30,7 @@ class AddDrugstoreForm extends Component {
             if (!err) {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
+                addRow(newMedicine);
             }
         });
     }
@@ -41,18 +41,18 @@ class AddDrugstoreForm extends Component {
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <FormItem>
-                        {getFieldDecorator('Drugstore Code', {
+                        {getFieldDecorator('drugstoreCode', {
                             rules: [{ required: true, message: 'Please input drugstore code!' }],
                         })(
                             <Input
                                 prefix={<Icon type="user" />}
                                 size="large"
                                 name="drugstoreCode"
-                                placeholder="Medicine Code" />
+                                placeholder="Drugstore Code" />
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Network Title', {
+                        {getFieldDecorator('networkTitle', {
                             rules: [{ required: true, message: 'Please input title!' }],
                         })(
                             <Input
@@ -64,7 +64,7 @@ class AddDrugstoreForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Phone Number', {
+                        {getFieldDecorator('phoneNumber', {
                             rules: [{ required: true, message: 'Please input expiration term!' }],
                         })(
                             <Input
@@ -76,7 +76,7 @@ class AddDrugstoreForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Region', {
+                        {getFieldDecorator('region', {
                             rules: [{ required: true, message: 'Please input measurement unit!' }],
                         })(
                             <Input
@@ -88,7 +88,7 @@ class AddDrugstoreForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        {getFieldDecorator('Manager Code', {
+                        {getFieldDecorator('managerCode', {
                             rules: [{ required: true, message: 'Please input manager code!' }],
                         })(
                             <Input
