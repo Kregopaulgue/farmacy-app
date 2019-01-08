@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class DrugstoreController {
     //GET mappings
     @GetMapping("/get")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Drugstore getDrugstoreById(@RequestParam("drugstoreCode") Long drugstoreCode) {
         return drugstoreRepository.findById(drugstoreCode)
                 .orElseThrow(() -> new ResourceNotFoundException("Drugstore", "id", drugstoreCode));
@@ -33,12 +35,14 @@ public class DrugstoreController {
 
     @GetMapping("/all")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public List<Drugstore> getAllDrugstores() {
         return drugstoreRepository.findAll();
     }
 
     @GetMapping("/manager")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Page<Drugstore> getAllDrugstoresByManager(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
 
         return drugstoreRepository.findByManagerManagerCode(managerCode, pageable);
@@ -48,6 +52,7 @@ public class DrugstoreController {
     //POST mappings
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Drugstore createDrugstore(@RequestParam("managerCode") Long managerCode, @Valid @RequestBody Drugstore drugstore) {
 
         return managerRepository.findById(managerCode).map(manager -> {
@@ -60,6 +65,7 @@ public class DrugstoreController {
     //PUT mappings
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Drugstore updateDrugstoreById(@RequestParam("drugstoreCode") Long drugstoreId,
                                      @Valid @RequestBody Drugstore drugstoreDetails) {
         Drugstore Drugstore = drugstoreRepository.findById(drugstoreId)
@@ -77,6 +83,7 @@ public class DrugstoreController {
 
     @DeleteMapping("/delete")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteDrugstore(@RequestParam("drugstoreCode") Long drugstoreId) {
 
         Drugstore Drugstore = drugstoreRepository.findById(drugstoreId)

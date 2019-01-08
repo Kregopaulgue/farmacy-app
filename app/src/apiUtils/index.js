@@ -24,6 +24,7 @@ const request = (options) => {
 };
 
 export function login(loginRequest) {
+    console.log(loginRequest);
     return request({
         url: 'api/manager/signin',
         method: 'POST',

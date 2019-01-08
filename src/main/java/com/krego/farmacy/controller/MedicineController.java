@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ public class MedicineController {
     //GET mappings
     @GetMapping("/get")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Medicine getMedicineById(@RequestParam("medicineCode") Long medicineId) {
         return medicineRepository.findById(medicineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Medicine", "id", medicineId));
@@ -39,12 +41,14 @@ public class MedicineController {
 
     @GetMapping("/manager")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Page<Medicine> getMedicineByManagerCode(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
         return medicineRepository.findByManagerCode(managerCode, pageable);
     }
 
     @GetMapping("/all")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public List<Medicine> getAllMedicines() {
         return medicineRepository.findAll();
     }
@@ -52,6 +56,7 @@ public class MedicineController {
     //POST mappings
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Medicine createMedicine(@RequestParam("manufacturerCode") Long manufacturerCode,
                                    @Valid @RequestBody Medicine medicine) {
         return manufacturerRepository.findById(manufacturerCode).map(manufacturer -> {
@@ -63,6 +68,7 @@ public class MedicineController {
     //PUT mappings
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Medicine updateMedicineById(@RequestParam("medicineCode") Long medicineId,
                                                @Valid @RequestBody Medicine medicineDetails) {
         Medicine medicine = medicineRepository.findById(medicineId)
@@ -79,6 +85,7 @@ public class MedicineController {
 
     @DeleteMapping("/delete")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteMedicine(@RequestParam("medicineCode") Long medicineId) {
 
         Medicine medicine = medicineRepository.findById(medicineId)

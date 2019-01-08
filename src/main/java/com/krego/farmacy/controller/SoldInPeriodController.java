@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -47,6 +48,7 @@ public class SoldInPeriodController {
     //GET mappings
     @GetMapping("/get")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public SoldInPeriod getSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
         return soldInPeriodRepository.findById(soldInPeriodId)
                 .orElseThrow(() -> new ResourceNotFoundException("SoldInPeriod", "id", soldInPeriodId));
@@ -54,6 +56,7 @@ public class SoldInPeriodController {
 
     @GetMapping("/manager")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Page<SoldInPeriod> getAllSoldInPeriods(@RequestParam("managerCode") Long managerCode, Pageable pageable) {
 
         return soldInPeriodRepository.findByDrugstore_ManagerManagerCode(managerCode, pageable);
@@ -62,12 +65,14 @@ public class SoldInPeriodController {
 
     @GetMapping("/all")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public List<SoldInPeriod> getAllSoldInPeriods() {
         return soldInPeriodRepository.findAll();
     }
 
     //POST mappings
     @PostMapping("/upload")
+    @PreAuthorize("hasRole('USER')")
     public UploadFileResponse uploadSoldInPeriod(@RequestParam("file") MultipartFile file) throws Exception{
 
         String fileName = fileStorageService.storeFile(file);
@@ -90,6 +95,7 @@ public class SoldInPeriodController {
 
     @PostMapping("/new")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public SoldInPeriod createSoldInPeriod(@RequestParam("drugstoreCode") Long drugstoreCode,
                                            @RequestParam("medicineCode") Long medicineCode,
                                            @Valid @RequestBody SoldInPeriod soldInPeriod) {
@@ -108,6 +114,7 @@ public class SoldInPeriodController {
     //PUT mappings
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public SoldInPeriod updateSoldInPeriodById(@RequestParam("soldInPeriodCode") Long soldInPeriodId,
                                        @Valid @RequestBody SoldInPeriod soldInPeriodDetails) {
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)
@@ -124,6 +131,7 @@ public class SoldInPeriodController {
 
     @DeleteMapping("/delete")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteSoldInPeriod(@RequestParam("soldInPeriodCode") Long soldInPeriodId) {
 
         SoldInPeriod soldInPeriod = soldInPeriodRepository.findById(soldInPeriodId)

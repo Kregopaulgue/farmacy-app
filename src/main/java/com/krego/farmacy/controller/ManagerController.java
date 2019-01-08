@@ -144,6 +144,7 @@ public class ManagerController {
     //PUT mappings
     @PutMapping("/update")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public Manager updateManagerById(@RequestParam("managerCode") Long managerId,
                                         @Valid @RequestBody Manager managerDetails) {
         Manager manager = managerRepository.findById(managerId)
@@ -164,6 +165,7 @@ public class ManagerController {
 
     @DeleteMapping("/delete")
     @ResponseBody
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteManager(@RequestParam("managerCode") Long managerId) {
 
         Manager manager = managerRepository.findById(managerId)
