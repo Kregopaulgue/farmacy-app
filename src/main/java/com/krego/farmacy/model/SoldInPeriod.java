@@ -39,4 +39,10 @@ public class SoldInPeriod {
     @JoinColumn(name = "medicine_code", nullable = false)
     private Medicine medicine;
 
+    public SoldInPeriod(Long soldId, Date periodStart, Date periodEnd, double sum, int amount) {
+        this.periodStart = periodStart;
+        this.periodEnd = periodEnd;
+        this.sum = sum;
+        this.amount = amount;
+    }
 }
