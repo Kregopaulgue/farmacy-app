@@ -4,6 +4,7 @@ import { getAllManufacturers } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import '../../styles/DataTable.css'
+import NonEditableTable from  '../NonEditableTable';
 import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
 import AddManufacturer from '../../components/AddForms/AddManufacturer';
@@ -16,6 +17,7 @@ class ManufacturersList extends Component {
             loadedManufacturers: null,
             isLoading: false,
             toAdd: false,
+            isEditable: props.isEditable,
         }
     }
 
@@ -71,7 +73,7 @@ class ManufacturersList extends Component {
         }
 
         const { loadedManufacturers } = this.state;
-        console.log(loadedManufacturers);
+
         const textColumns = [
             {
                 title: 'Firm Title',
@@ -103,12 +105,17 @@ class ManufacturersList extends Component {
             },
         ];
 
-        const { toAdd } = this.state;
+        const { toAdd, isEditable } = this.state;
 
         return(
             <div className="containerForTable">
                 <div className="dataTable">
-                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers}/>
+                    {
+                        isEditable && <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers} isManufacturer={true}/>
+                    }
+                    {
+                        !isEditable && <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers} isManufacturer={true}/>
+                    }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
                 { toAdd && <AddManufacturer/>}

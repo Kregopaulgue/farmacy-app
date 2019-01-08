@@ -3,6 +3,7 @@ import EditableTable from '../EditableTable';
 import { getManagerMedicine } from "../../apiUtils";
 import AddMedicine from '../../components/AddForms/AddMedicine';
 import ServerError from '../ServerError';
+import NonEditableTable from  '../NonEditableTable';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
 import { Button } from "antd";
@@ -16,7 +17,8 @@ class MedicineList extends Component {
             loadedMedicine: null,
             isLoading: false,
             toAdd: false,
-        }
+            isEditable: props.isEditable,
+        };
     }
 
     getCurrentUserMedicine = () => {
@@ -49,7 +51,9 @@ class MedicineList extends Component {
     };
 
     componentDidMount() {
+        console.log("Get medicine");
         this.getCurrentUserMedicine();
+        console.log("Get medicine...");
     };
 
     onAdd = () => {
@@ -71,6 +75,7 @@ class MedicineList extends Component {
         }
 
         const { loadedMedicine } = this.state;
+        console.log(loadedMedicine);
         const textColumns = [
             {
                 title: 'Title',
@@ -107,12 +112,17 @@ class MedicineList extends Component {
             },
         ];
 
-        const { toAdd } = this.state;
+        const { toAdd, isEditable } = this.state;
 
         return(
             <div className="containerForTable">
                 <div className="dataTable">
-                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedMedicine}/>
+                    {
+                        isEditable && <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedMedicine} isMedicine={true}/>
+                    }
+                    {
+                        !isEditable && <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedMedicine} isMedicine={true}/>
+                    }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
                 { toAdd && <AddMedicine/>}

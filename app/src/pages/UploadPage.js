@@ -36,6 +36,7 @@ class UploadPage extends Component {
     render() {
         return(
             <div className="upload">
+
                 <Upload {...props}>
                     <Button className="uploadButton">
                         <Icon type="upload" /> Click to Upload

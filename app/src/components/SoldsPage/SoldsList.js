@@ -4,6 +4,7 @@ import { getManagerSolds } from "../../apiUtils";
 import ServerError from '../ServerError';
 import NotFound from '../NotFound';
 import LoadingIndicator from "../LoadingIndicator";
+import NonEditableTable from  '../NonEditableTable';
 import { Button } from "antd";
 import '../../styles/DataTable.css'
 import AddSoldInPeriods from '../../components/AddForms/AddSoldInPeriods';
@@ -16,6 +17,7 @@ class SoldsList extends Component {
             loadedSolds: null,
             isLoading: false,
             toAdd: false,
+            isEditable: props.isEditable,
         }
     }
 
@@ -105,12 +107,17 @@ class SoldsList extends Component {
             },
         ];
 
-        const { toAdd } = this.state;
+        const { toAdd, isEditable } = this.state;
 
         return(
             <div className="containerForTable">
                 <div className="dataTable">
-                    <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds}/>
+                    {
+                        isEditable && <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds} isSold={true}/>
+                    }
+                    {
+                        !isEditable && <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedSolds} isSold={true}/>
+                    }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
                 { toAdd && <AddSoldInPeriods/>}

@@ -100,16 +100,16 @@ class Profile extends Component {
                                       size="large"
                                       className="profile-tabs">
                                     <TabPane tab={`Drugstores`} key="1">
-                                        <DrugstoresList username={this.state.user.managerCode}/>
+                                        <DrugstoresList username={this.state.user.managerCode} isEditable={false}/>
                                     </TabPane>
                                     <TabPane tab={`Solds`}  key="2">
-                                        <SoldsList username={this.state.user.managerCode}/>
+                                        <SoldsList username={this.state.user.managerCode} isEditable={false}/>
                                     </TabPane>
                                     <TabPane tab={`Medicine`}  key="3">
-                                        <MedicineList username={this.state.user.managerCode}/>
+                                        <MedicineList username={this.state.user.managerCode} isEditable={false}/>
                                     </TabPane>
                                     <TabPane tab={`Manufacturers`}  key="4">
-                                        <ManufacturersList username={this.state.user.managerCode}/>
+                                        <ManufacturersList username={this.state.user.managerCode} isEditable={false}/>
                                     </TabPane>
                                 </Tabs>
                             </div>
