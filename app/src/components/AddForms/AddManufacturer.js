@@ -82,7 +82,7 @@ class AddManufacturerForm extends Component {
                                 prefix={<Icon type="lock" />}
                                 size="large"
                                 name="phoneNumber"
-                                type="text"
+                                type="number"
                                 placeholder="Phone"  />
                         )}
                     </FormItem>

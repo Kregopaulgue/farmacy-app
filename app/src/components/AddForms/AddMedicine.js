@@ -52,6 +52,18 @@ class AddMedicineForm extends Component {
                       )}
                   </FormItem>
                   <FormItem>
+                      {getFieldDecorator('price', {
+                          rules: [{ required: true, message: 'Please input price!' }],
+                      })(
+                          <Input
+                              prefix={<Icon type="lock" />}
+                              size="large"
+                              name="price"
+                              type="number"
+                              placeholder="Price"  />
+                      )}
+                  </FormItem>
+                  <FormItem>
                       {getFieldDecorator('title', {
                           rules: [{ required: true, message: 'Please input title!' }],
                       })(
@@ -76,7 +88,7 @@ class AddMedicineForm extends Component {
                       )}
                   </FormItem>
                   <FormItem>
-                      {getFieldDecorator('Measurement Unit', {
+                      {getFieldDecorator('measurementUnit', {
                           rules: [{ required: true, message: 'Please input measurement unit!' }],
                       })(
                           <Input

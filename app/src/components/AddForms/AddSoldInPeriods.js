@@ -48,31 +48,7 @@ class AddSoldInPeriodForm extends Component {
                                 prefix={<Icon type="user" />}
                                 size="large"
                                 name="soldId"
-                                placeholder="Medicine Code" />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('periodStart', {
-                            rules: [{ required: true, message: 'Please input period start!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="periodStart"
-                                type="text"
-                                placeholder="Title"  />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('periodEnd', {
-                            rules: [{ required: true, message: 'Please input period end!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="periodEnd"
-                                type="text"
-                                placeholder="Term"  />
+                                placeholder="Sold Id" />
                         )}
                     </FormItem>
                     <FormItem>
@@ -96,7 +72,31 @@ class AddSoldInPeriodForm extends Component {
                                 size="large"
                                 name="amount"
                                 type="number"
-                                placeholder="Manufacturer"  />
+                                placeholder="Amount"  />
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('periodStart', {
+                            rules: [{ required: true, message: 'Please input period start!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                size="large"
+                                name="periodStart"
+                                type="text"
+                                placeholder="Period Start"  />
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator('periodEnd', {
+                            rules: [{ required: true, message: 'Please input period end!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                size="large"
+                                name="periodEnd"
+                                type="text"
+                                placeholder="Period End"  />
                         )}
                     </FormItem>
                     <FormItem>
@@ -108,7 +108,7 @@ class AddSoldInPeriodForm extends Component {
                                 size="large"
                                 name="drugstoreCode"
                                 type="number"
-                                placeholder="Drugstore"  />
+                                placeholder="Drugstore Code"  />
                         )}
                     </FormItem>
                     <FormItem>
@@ -120,11 +120,11 @@ class AddSoldInPeriodForm extends Component {
                                 size="large"
                                 name="medicineCode"
                                 type="number"
-                                placeholder="medicineCode"  />
+                                placeholder="Medicine Code"  />
                         )}
                     </FormItem>
                     <FormItem>
-                        <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
+                        <Button type="primary" htmlType="submit" size="large" className="login-form-button">Add</Button>
                     </FormItem>
                 </Form>
             </div>

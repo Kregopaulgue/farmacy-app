@@ -52,6 +52,18 @@ class AddDrugstoreForm extends Component {
                         )}
                     </FormItem>
                     <FormItem>
+                        {getFieldDecorator('address', {
+                            rules: [{ required: true, message: 'Please input title!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                size="large"
+                                name="address"
+                                type="text"
+                                placeholder="Address"  />
+                        )}
+                    </FormItem>
+                    <FormItem>
                         {getFieldDecorator('networkTitle', {
                             rules: [{ required: true, message: 'Please input title!' }],
                         })(
@@ -71,7 +83,7 @@ class AddDrugstoreForm extends Component {
                                 prefix={<Icon type="lock" />}
                                 size="large"
                                 name="phoneNumber"
-                                type="text"
+                                type="number"
                                 placeholder="Phone"  />
                         )}
                     </FormItem>

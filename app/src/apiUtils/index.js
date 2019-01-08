@@ -149,12 +149,12 @@ function updateSoldInPeriod(payload) {
 
 export function addRow(payload) {
     console.log(payload);
-    if(payload.drugstoreCode) {
-        addDrugstore(payload);
+    if(payload.soldId) {
+        addSoldInPeriod(payload);
+    } else if(payload.drugstoreCode) {
+        addDrugstore(payload)
     } else if(payload.medicineCode) {
         addMedicine(payload)
-    } else if(payload.soldId) {
-        addSoldInPeriod(payload)
     } else if(payload.code) {
         addManufacturer(payload)
     }
@@ -172,7 +172,7 @@ function addDrugstore(payload) {
 function addMedicine(payload) {
     console.log('In adding medicine: ');
     return request({
-        url: '/api/medicine/new?medicineCode' + payload.manufacturerCode,
+        url: '/api/medicine/new?manufacturerCode=' + payload.manufacturerCode,
         method: 'POST',
         body: JSON.stringify(payload)
     });
@@ -190,7 +190,7 @@ function addManufacturer(payload) {
 function addSoldInPeriod(payload) {
     console.log('In adding sold: ');
     return request({
-        url: '/api/medicine/new?drugstoreCode' + payload.drugstoreCode + '&medicineCode=' + payload.medicineCode,
+        url: '/api/sold/new?drugstoreCode=' + payload.drugstoreCode + '&medicineCode=' + payload.medicineCode,
         method: 'POST',
         body: JSON.stringify(payload)
     });

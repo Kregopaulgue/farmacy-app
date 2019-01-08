@@ -87,6 +87,8 @@ public class SoldInPeriodController {
         soldInPeriod.setDrugstore(parentDrugstore);
         soldInPeriod.setMedicine(parentMedicine);
 
+        System.out.println(soldInPeriod.getSoldId());
+
         return soldInPeriodRepository.save(soldInPeriod);
     }
 
