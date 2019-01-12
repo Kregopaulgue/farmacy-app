@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Input, Button, Popconfirm, Form, InputNumber } from 'antd';
-import { updateRow } from "../apiUtils";
+import { updateRow, deleteRow } from "../apiUtils";
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -104,9 +104,28 @@ class EditableTable extends React.Component {
                 );
             },
         });
+
+        this.columns.push({
+            title: 'operation',
+            dataIndex: 'operation',
+            render: (text, record) => (
+                this.state.data.length >= 1
+                    ? (
+                        <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
+                            <a href="javascript:;">Delete</a>
+                        </Popconfirm>
+                    ) : null
+            ),
+        });
     }
 
     isEditing = record => record.key === this.state.editingKey;
+
+    handleDelete = (key) => {
+        const dataSource = [...this.state.data];
+        this.setState({ data: dataSource.filter(item => item.key !== key) });
+        deleteRow(dataSource.filter(item => item.key == key)[0]);
+    };
 
     cancel = () => {
         this.setState({ editingKey: '' });

@@ -155,19 +155,19 @@ function updateDrugstore(payload) {
     });
 }
 
-function updateManufacturer(payload) {
-    console.log('In update manufacturer server: ' + payload);
+function updateMedicine(payload) {
+    console.log('In update medicine server: ' + payload);
     return request({
-        url: "/api/manufacturer/update?manufacturerCode=" + payload.code,
+        url: "/api/medicine/update?medicineCode=" + payload.medicineCode,
         method: 'PUT',
         body: JSON.stringify(payload),
     });
 }
 
-function updateMedicine(payload) {
-    console.log('In update medicine server: ' + payload);
+function updateManufacturer(payload) {
+    console.log('In update manufacturer server: ' + payload);
     return request({
-        url: "/api/medicine/update?medicineCode=" + payload.medicineCode,
+        url: "/api/manufacturer/update?manufacturerCode=" + payload.code,
         method: 'PUT',
         body: JSON.stringify(payload),
     });
@@ -179,6 +179,51 @@ function updateSoldInPeriod(payload) {
         url: "/api/sold/update?soldInPeriodCode=" + payload.soldId,
         method: 'PUT',
         body: JSON.stringify(payload),
+    });
+}
+
+export function deleteRow(payload) {
+    console.log(payload);
+    if(payload.drugstoreCode) {
+        deleteDrugstore(payload);
+    } else if(payload.medicineCode) {
+        deleteMedicine(payload)
+    } else if(payload.soldId) {
+        deleteSoldInPeriod(payload)
+    } else if(payload.code) {
+        deleteManufacturer(payload)
+    }
+}
+
+function deleteDrugstore(payload) {
+    console.log('In delete drugstore server: ' + payload);
+    return request({
+        url: "/api/drugstore/delete?drugstoreCode=" + payload.drugstoreCode,
+        method: 'DELETE',
+    });
+}
+
+function deleteMedicine(payload) {
+    console.log('In delete medicine server: ' + payload);
+    return request({
+        url: "/api/medicine/delete?medicineCode=" + payload.medicineCode,
+        method: 'DELETE'
+    });
+}
+
+function deleteSoldInPeriod(payload) {
+    console.log('In delete sold server: ' + payload);
+    return request({
+        url: "/api/sold/delete?soldInPeriodCode=" + payload.soldId,
+        method: 'DELETE',
+    });
+}
+
+function deleteManufacturer(payload) {
+    console.log('In delete manufacturer server: ' + payload);
+    return request({
+        url: "/api/manufacturer/delete?manufacturerCode=" + payload.code,
+        method: 'DELETE'
     });
 }
 

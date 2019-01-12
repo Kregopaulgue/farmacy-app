@@ -44,6 +44,7 @@ class App extends Component {
             isLoading: false
           });
           console.log(this.state.currentUser);
+          this.props.history.push("/managers/" + this.state.currentUser.managerCode);
         }).catch(error => {
       this.setState({
         isLoading: false
@@ -56,7 +57,7 @@ class App extends Component {
   }
 
   // Handle Logout, Set currentUser and isAuthenticated state which will be passed to other components
-  handleLogout(redirectTo="/", notificationType="success", description="You're successfully logged out.") {
+  handleLogout(redirectTo="/login", notificationType="success", description="You're successfully logged out.") {
     localStorage.removeItem(ACCESS_TOKEN);
 
     this.setState({
@@ -83,8 +84,6 @@ class App extends Component {
       description: "You're successfully logged in.",
     });
     this.loadCurrentUser();
-
-    this.props.history.push("/");
   }
 
   render() {
@@ -99,7 +98,6 @@ class App extends Component {
           <Content className="app-content">
             <div className="container">
               <Switch>
-
                 <Route path="/login"
                        render={(props) => <LoginPage onLogin={this.handleLogin} {...props} />}/>
                 <Route path="/signup" component={SignUp}/>

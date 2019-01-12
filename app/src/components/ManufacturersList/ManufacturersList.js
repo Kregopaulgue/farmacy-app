@@ -33,7 +33,7 @@ class ManufacturersList extends Component {
 
         if(this.props.request) {
             this.props.request().then((response) => {
-                console.log(response);
+                console.log("In response: " + response);
                 this.setState({
                     loadedManufacturers: response,
                     isLoading: false
@@ -58,7 +58,7 @@ class ManufacturersList extends Component {
                 .then((response) => {
                     console.log(response);
                     this.setState({
-                        loadedManufacturers: response.content,
+                        loadedManufacturers: response,
                         isLoading: false
                     });
                 }) .catch(
@@ -97,8 +97,6 @@ class ManufacturersList extends Component {
             return <ServerError />;
         }
 
-        const { loadedManufacturers } = this.state;
-
         const textColumns = [
             {
                 title: 'Firm Title',
@@ -136,10 +134,10 @@ class ManufacturersList extends Component {
             <div className="containerForTable">
                 <div className="dataTable">
                     {
-                        isEditable && <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers} isManufacturer={true}/>
+                        isEditable && <EditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={this.state.loadedManufacturers} isManufacturer={true}/>
                     }
                     {
-                        !isEditable && <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={loadedManufacturers} isManufacturer={true}/>
+                        !isEditable && <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={this.state.loadedManufacturers} isManufacturer={true}/>
                     }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
