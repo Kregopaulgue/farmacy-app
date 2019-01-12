@@ -30,28 +30,53 @@ class ManufacturersList extends Component {
             isLoading: true
         });
         console.log("Im in medicine")
-        getAllManufacturers(this.props.username)
-            .then((response) => {
+
+        if(this.props.request) {
+            this.props.request().then((response) => {
                 console.log(response);
                 this.setState({
                     loadedManufacturers: response,
                     isLoading: false
                 });
-            }) .catch(
-            error => {
-                console.log(error);
-                if (error.status === 404) {
+            }).catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        } else {
+            getAllManufacturers(this.props.username)
+                .then((response) => {
+                    console.log(response);
                     this.setState({
-                        notFound: true,
+                        loadedManufacturers: response.content,
                         isLoading: false
                     });
-                } else {
-                    this.setState({
-                        serverError: true,
-                        isLoading: false
-                    });
-                }
-            });
+                }) .catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        }
     };
 
     componentDidMount() {

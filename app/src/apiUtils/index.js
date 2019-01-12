@@ -48,6 +48,40 @@ export function checkUsernameAvailability(username) {
     });
 }
 
+export function getAllManagers() {
+    return request({
+        url: "/api/manager/all",
+        method: 'GET'
+    });
+}
+
+export function getAllDrugstores() {
+    return request({
+        url: "/api/drugstore/all",
+        method: 'GET'
+    });
+}
+
+export function getAllMedicines() {
+    return request({
+        url: "/api/medicine/all",
+        method: 'GET'
+    });
+}
+
+export function getAllSoldInPeriods() {
+    return request({
+        url: "/api/sold/all",
+        method: 'GET'
+    });
+}
+
+export function getManufacturers() {
+    return request({
+        url: "/api/manufacturer/all",
+        method: 'GET'
+    });
+}
 
 export function getCurrentUser() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {

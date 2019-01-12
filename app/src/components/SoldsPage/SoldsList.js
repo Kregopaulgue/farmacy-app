@@ -29,28 +29,53 @@ class SoldsList extends Component {
         this.setState({
             isLoading: true
         });
-        getManagerSolds(this.props.username)
-            .then((response) => {
+        if(this.props.request) {
+            this.props.request().then((response) => {
                 console.log(response);
                 this.setState({
-                    loadedSolds: response.content,
+                    loadedSolds: response,
                     isLoading: false
                 });
-            }) .catch(
-            error => {
-                console.log(error);
-                if (error.status === 404) {
+                console.log(this.state);
+            }).catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        } else {
+            getManagerSolds(this.props.username)
+                .then((response) => {
+                    console.log(response);
                     this.setState({
-                        notFound: true,
+                        loadedSolds: response.content,
                         isLoading: false
                     });
-                } else {
-                    this.setState({
-                        serverError: true,
-                        isLoading: false
-                    });
-                }
-            });
+                }) .catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        }
     };
 
     componentDidMount() {

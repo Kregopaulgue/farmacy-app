@@ -72,8 +72,8 @@ public class SoldInPeriodController {
 
     //POST mappings
     @PostMapping("/upload")
-    @PreAuthorize("hasRole('USER')")
-    public UploadFileResponse uploadSoldInPeriod(@RequestParam("file") MultipartFile file) throws Exception{
+    //@PreAuthorize("hasRole('USER')")
+    public List<SoldInPeriod> uploadSoldInPeriod(@RequestParam("file") MultipartFile file) throws Exception{
 
         String fileName = fileStorageService.storeFile(file);
 
@@ -89,8 +89,7 @@ public class SoldInPeriodController {
             soldInPeriodRepository.save(sold);
         }
 
-        return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+        return solds;
     }
 
     @PostMapping("/new")

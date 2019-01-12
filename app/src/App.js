@@ -88,6 +88,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.currentUser);
     /*<PrivateRoute authenticated={this.state.isAuthenticated} path="/poll/new" component={NewPoll} handleLogout={this.handleLogout}/>*/
     return (
         <Layout className="app-container">
@@ -98,11 +99,12 @@ class App extends Component {
           <Content className="app-content">
             <div className="container">
               <Switch>
+
                 <Route path="/login"
                        render={(props) => <LoginPage onLogin={this.handleLogin} {...props} />}/>
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/managers/:username"
-                       render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                       render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} isAdmin={false} {...props}/>}>
                 </Route>
                 <Route path="/upload"
                        render={(props) => <UploadPage {...props} />}>

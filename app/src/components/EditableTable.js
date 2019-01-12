@@ -61,6 +61,13 @@ class EditableTable extends React.Component {
         super(props);
         console.log(props);
         this.state = { data: props.loadedDrugstores, editingKey: '' };
+
+        if(this.state.data) {
+            for(let i = 0; i < this.state.data.length; i++) {
+                this.state.data[i].key = i;
+            }
+        }
+
         this.columns = props.numberColumns;
         this.columns = this.columns.concat(props.textColumns);
         this.columns.push({
@@ -111,7 +118,13 @@ class EditableTable extends React.Component {
                 return;
             }
             const newData = [...this.state.data];
-            const index = newData.findIndex(item => key === item.key);
+            console.log(this.state.data);
+            console.log(key);
+            const index = newData.findIndex(item => {
+                console.log(item);
+              return key === item.key
+            });
+            console.log(index);
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, {

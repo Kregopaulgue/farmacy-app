@@ -25,29 +25,53 @@ class MedicineList extends Component {
         this.setState({
             isLoading: true
         });
-        console.log("Im in medicine")
-        getManagerMedicine(this.props.username)
-            .then((response) => {
+        console.log("Im in medicine");
+        if(this.props.request) {
+            this.props.request().then((response) => {
                 console.log(response);
                 this.setState({
-                    loadedMedicine: response.content,
+                    loadedMedicine: response,
                     isLoading: false
                 });
-            }) .catch(
-            error => {
-                console.log(error);
-                if (error.status === 404) {
+            }).catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        } else {
+            getManagerMedicine(this.props.username)
+                .then((response) => {
+                    console.log(response);
                     this.setState({
-                        notFound: true,
+                        loadedMedicine: response.content,
                         isLoading: false
                     });
-                } else {
-                    this.setState({
-                        serverError: true,
-                        isLoading: false
-                    });
-                }
-            });
+                }) .catch(
+                error => {
+                    console.log(error);
+                    if (error.status === 404) {
+                        this.setState({
+                            notFound: true,
+                            isLoading: false
+                        });
+                    } else {
+                        this.setState({
+                            serverError: true,
+                            isLoading: false
+                        });
+                    }
+                });
+        }
     };
 
     componentDidMount() {

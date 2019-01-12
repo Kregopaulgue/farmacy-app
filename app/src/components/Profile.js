@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { getUserProfile } from '../apiUtils';
+import {getAllDrugstores, getAllManufacturers, getAllMedicines, getAllSoldInPeriods, getUserProfile} from '../apiUtils';
 import { Avatar, Tabs } from 'antd';
 import DrugstoresList from './DrugstoresPage/DrugstoresList'
 import MedicineList from './MedicinePage/MedicineList'
 import SoldsList from './SoldsPage/SoldsList'
+
 import ManufacturersList from './ManufacturersList/ManufacturersList'
 import { getAvatarColor } from '../helpers/Colors';
 import LoadingIndicator  from './LoadingIndicator';
@@ -77,43 +78,93 @@ class Profile extends Component {
             textAlign: 'center'
         };
 
+        let table;
+
+        const { isAdmin } = this.props;
+
+        if(this.state.user) {
+            const managerCode = this.state.user.managerCode;
+
+            if(!isAdmin) {
+                table = <div>
+                    <div className="user-profile">
+                        <div className="user-details">
+                            <div className="user-avatar">
+                                <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
+                                    {this.state.user.name[0].toUpperCase()}
+                                </Avatar>
+                            </div>
+                            <div className="user-summary">
+                                <div className="full-name">{this.state.user.name}</div>
+                                <div className="username">@{this.state.user.surname}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="user-poll-details">
+                        <Tabs defaultActiveKey="1"
+                              animated={false}
+                              tabBarStyle={tabBarStyle}
+                              size="large"
+                              className="profile-tabs">
+                            <TabPane tab={`Drugstores`} key="1">
+                                <DrugstoresList username={managerCode} isEditable={false}/>
+                            </TabPane>
+                            <TabPane tab={`Solds`}  key="2">
+                                <SoldsList username={managerCode} isEditable={false}/>
+                            </TabPane>
+                            <TabPane tab={`Medicine`}  key="3">
+                                <MedicineList username={managerCode} isEditable={false}/>
+                            </TabPane>
+                            <TabPane tab={`Manufacturers`}  key="4">
+                                <ManufacturersList username={managerCode} isEditable={false}/>
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                </div>
+            } else {
+                table = <div>
+                    <div className="user-profile">
+                        <div className="user-details">
+                            <div className="user-avatar">
+                                <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
+                                    {this.state.user.name[0].toUpperCase()}
+                                </Avatar>
+                            </div>
+                            <div className="user-summary">
+                                <div className="full-name">{this.state.user.name}</div>
+                                <div className="username">@{this.state.user.surname}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="user-poll-details">
+                        <Tabs defaultActiveKey="1"
+                              animated={false}
+                              tabBarStyle={tabBarStyle}
+                              size="large"
+                              className="profile-tabs">
+                            <TabPane tab={`Drugstores`} key="1">
+                                <DrugstoresList username={this.state.user.managerCode} isEditable={true} request={getAllDrugstores}/>
+                            </TabPane>
+                            <TabPane tab={`Solds`}  key="2">
+                                <SoldsList username={this.state.user.managerCode} isEditable={true} request={getAllSoldInPeriods}/>
+                            </TabPane>
+                            <TabPane tab={`Medicine`}  key="3">
+                                <MedicineList username={this.state.user.managerCode} isEditable={true} request={getAllMedicines}/>
+                            </TabPane>
+                            <TabPane tab={`Manufacturers`}  key="4">
+                                <ManufacturersList username={this.state.user.managerCode} isEditable={true} request={getAllManufacturers}/>
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                </div>
+            }
+        }
+
         return (
             <div className="profile">
                 {
                     this.state.user ? (
-                        <div className="user-profile">
-                            <div className="user-details">
-                                <div className="user-avatar">
-                                    <Avatar className="user-avatar-circle" style={{ backgroundColor: getAvatarColor(this.state.user.name)}}>
-                                        {this.state.user.name[0].toUpperCase()}
-                                    </Avatar>
-                                </div>
-                                <div className="user-summary">
-                                    <div className="full-name">{this.state.user.name}</div>
-                                    <div className="username">@{this.state.user.surname}</div>
-                                </div>
-                            </div>
-                            <div className="user-poll-details">
-                                <Tabs defaultActiveKey="1"
-                                      animated={false}
-                                      tabBarStyle={tabBarStyle}
-                                      size="large"
-                                      className="profile-tabs">
-                                    <TabPane tab={`Drugstores`} key="1">
-                                        <DrugstoresList username={this.state.user.managerCode} isEditable={false}/>
-                                    </TabPane>
-                                    <TabPane tab={`Solds`}  key="2">
-                                        <SoldsList username={this.state.user.managerCode} isEditable={false}/>
-                                    </TabPane>
-                                    <TabPane tab={`Medicine`}  key="3">
-                                        <MedicineList username={this.state.user.managerCode} isEditable={false}/>
-                                    </TabPane>
-                                    <TabPane tab={`Manufacturers`}  key="4">
-                                        <ManufacturersList username={this.state.user.managerCode} isEditable={false}/>
-                                    </TabPane>
-                                </Tabs>
-                            </div>
-                        </div>
+                        table
                     ): null
                 }
             </div>
