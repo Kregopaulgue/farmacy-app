@@ -1,0 +1,16 @@
+.dataTable {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.containerForTable {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.updateButton {
+    width: 10%;
+}
