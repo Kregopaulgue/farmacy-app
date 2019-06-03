@@ -27,7 +27,8 @@ class SoldsList extends Component {
 
     getCurrentUserDrugstores = () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            toAdd: false
         });
         if(this.props.request) {
             this.props.request().then((response) => {
@@ -76,6 +77,9 @@ class SoldsList extends Component {
                     }
                 });
         }
+        this.setState({
+            toAdd: false
+        })
     };
 
     componentDidMount() {
@@ -145,7 +149,8 @@ class SoldsList extends Component {
                     }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
-                { toAdd && <AddSoldInPeriods/>}
+                { toAdd && <AddSoldInPeriods
+                                onAdding={this.getCurrentUserDrugstores}/>}
             </div>
         );
     }

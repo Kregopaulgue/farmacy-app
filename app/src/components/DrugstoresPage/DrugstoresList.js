@@ -29,7 +29,8 @@ class DrugstoresList extends Component {
 
     getCurrentUserDrugstores = () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            toAdd: false
         });
         if(this.props.request) {
             this.props.request().then((response) => {
@@ -150,7 +151,8 @@ class DrugstoresList extends Component {
                     { table }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
-                { toAdd && <AddDrugstore/>}
+                { toAdd && <AddDrugstore
+                                onAdding={this.getCurrentUserDrugstores}/>}
             </div>
         );
     }

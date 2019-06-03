@@ -5,12 +5,16 @@ import {addRow} from '../../apiUtils';
 
 const FormItem = Form.Item;
 class AddManufacturer extends Component {
+    constructor(props) {
+        super(props);
+    };
+
     render() {
         const AntWrappedLoginForm = Form.create()(AddManufacturerForm);
         return (
             <div className="login-container">
                 <div className="login-content">
-                    <AntWrappedLoginForm />
+                    <AntWrappedLoginForm onAdding={this.props.onAdding}/>
                 </div>
             </div>
         );
@@ -29,7 +33,9 @@ class AddManufacturerForm extends Component {
             if (!err) {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
-                addRow(newMedicine);
+                addRow(newMedicine).then((res) => {
+                    this.props.onAdding();
+                });
             }
         });
     }

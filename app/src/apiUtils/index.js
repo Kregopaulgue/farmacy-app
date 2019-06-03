@@ -230,13 +230,13 @@ function deleteManufacturer(payload) {
 export function addRow(payload) {
     console.log(payload);
     if(payload.soldId) {
-        addSoldInPeriod(payload);
+        return addSoldInPeriod(payload);
     } else if(payload.drugstoreCode) {
-        addDrugstore(payload)
+        return addDrugstore(payload)
     } else if(payload.medicineCode) {
-        addMedicine(payload)
+        return addMedicine(payload)
     } else if(payload.code) {
-        addManufacturer(payload)
+        return addManufacturer(payload)
     }
 }
 

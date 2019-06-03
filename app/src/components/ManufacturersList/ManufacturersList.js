@@ -27,7 +27,8 @@ class ManufacturersList extends Component {
 
     getCurrentUserMedicine = () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            toAdd: false
         });
         console.log("Im in medicine")
 
@@ -141,7 +142,8 @@ class ManufacturersList extends Component {
                     }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
-                { toAdd && <AddManufacturer/>}
+                { toAdd && <AddManufacturer
+                                onAdding={this.getCurrentUserMedicine}/>}
             </div>
         );
     }

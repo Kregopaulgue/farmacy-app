@@ -23,7 +23,8 @@ class MedicineList extends Component {
 
     getCurrentUserMedicine = () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            toAdd: false
         });
         console.log("Im in medicine");
         if(this.props.request) {
@@ -149,7 +150,8 @@ class MedicineList extends Component {
                     }
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
-                { toAdd && <AddMedicine/>}
+                { toAdd && <AddMedicine
+                                onAdding={this.getCurrentUserMedicine}/>}
             </div>
         );
     }
