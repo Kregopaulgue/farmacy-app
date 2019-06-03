@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import EditableTable from '../EditableTable';
-import { getManagerMedicine } from "../../apiUtils";
+import {getAllMedicines, getManagerMedicine} from "../../apiUtils";
 import AddMedicine from '../../components/AddForms/AddMedicine';
 import ServerError from '../ServerError';
 import NonEditableTable from  '../NonEditableTable';
@@ -50,11 +50,11 @@ class MedicineList extends Component {
                     }
                 });
         } else {
-            getManagerMedicine(this.props.username)
+            getAllMedicines()
                 .then((response) => {
                     console.log(response);
                     this.setState({
-                        loadedMedicine: response.content,
+                        loadedMedicine: response,
                         isLoading: false
                     });
                 }) .catch(

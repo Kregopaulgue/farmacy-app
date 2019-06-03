@@ -36,6 +36,11 @@ class AddSoldInPeriodForm extends Component {
                 console.log(newMedicine);
                 addRow(newMedicine).then((res) => {
                     this.props.onAdding();
+                }).catch(error => {
+                    notification.error({
+                        message: 'Pharmacy App',
+                        description: error.message || 'Sorry! Something went wrong. Please try again!'
+                    });
                 });
             }
         });
@@ -47,7 +52,7 @@ class AddSoldInPeriodForm extends Component {
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
                     <Row>
-                        <Col span={6}>
+                        <Col span={12}>
                             <FormItem>
                                 {getFieldDecorator('soldId', {
                                     rules: [{ required: true, message: 'Please input sold id!' }],
@@ -60,7 +65,7 @@ class AddSoldInPeriodForm extends Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={12}>
                             <FormItem>
                                 {getFieldDecorator('sum', {
                                     rules: [{ required: true, message: 'Please input sum!' }],
@@ -76,7 +81,7 @@ class AddSoldInPeriodForm extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={6}>
+                        <Col span={12}>
                             <FormItem>
                                 {getFieldDecorator('amount', {
                                     rules: [{ required: true, message: 'Please input amount!' }],
@@ -90,7 +95,7 @@ class AddSoldInPeriodForm extends Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={12}>
                             <FormItem>
                                 {getFieldDecorator('periodStart', {
                                     rules: [{ required: true, message: 'Please input period start!' }],

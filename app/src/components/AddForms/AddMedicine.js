@@ -36,6 +36,11 @@ class AddMedicineForm extends Component {
                 console.log(newMedicine);
                 addRow(newMedicine).then((res) => {
                     this.props.onAdding();
+                }).catch(error => {
+                    notification.error({
+                        message: 'Pharmacy App',
+                        description: error.message || 'Sorry! Something went wrong. Please try again!'
+                    });
                 });
             }
         });
