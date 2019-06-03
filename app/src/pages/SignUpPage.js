@@ -130,19 +130,6 @@ class Signup extends Component {
                                 value={this.state.surname.value}
                                 onChange={(event) => this.handleInputChange(event, this.validateString)} />
                         </FormItem>
-                        <FormItem label="Manager Code"
-                                  hasFeedback
-                                  validateStatus={this.state.code.validateStatus}
-                                  help={this.state.code.errorMsg}>
-                            <Input
-                                size="large"
-                                name="code"
-                                autoComplete="off"
-                                placeholder="A unique code"
-                                value={this.state.code.value}
-                                onBlur={this.validateUsernameAvailability}
-                                onChange={(event) => this.handleInputChange(event, this.validateUsername)} />
-                        </FormItem>
                         <FormItem
                             label="Patronymic"
                             hasFeedback
@@ -156,6 +143,19 @@ class Signup extends Component {
                                 placeholder="Your patronymic"
                                 value={this.state.patronymic.value}
                                 onChange={(event) => this.handleInputChange(event, this.validateString)} />
+                        </FormItem>
+                        <FormItem label="Manager Code"
+                                  hasFeedback
+                                  validateStatus={this.state.code.validateStatus}
+                                  help={this.state.code.errorMsg}>
+                            <Input
+                                size="large"
+                                name="code"
+                                autoComplete="off"
+                                placeholder="A unique code"
+                                value={this.state.code.value}
+                                onBlur={this.validateUsernameAvailability}
+                                onChange={(event) => this.handleInputChange(event, this.validateUsername)} />
                         </FormItem>
                         <FormItem
                             label="Address"

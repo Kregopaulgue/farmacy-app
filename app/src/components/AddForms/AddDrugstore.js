@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, notification } from 'antd';
+import { Form, Input, Button, Icon, notification, Row, Col } from 'antd';
 import '../../styles/LoginPage.css';
 import {addRow} from '../../apiUtils';
 
@@ -47,77 +47,95 @@ class AddDrugstoreForm extends Component {
         return(
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
-                    <FormItem>
-                        {getFieldDecorator('drugstoreCode', {
-                            rules: [{ required: true, message: 'Please input drugstore code!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="user" />}
-                                size="large"
-                                name="drugstoreCode"
-                                placeholder="Drugstore Code" />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('address', {
-                            rules: [{ required: true, message: 'Please input title!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="address"
-                                type="text"
-                                placeholder="Address"  />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('networkTitle', {
-                            rules: [{ required: true, message: 'Please input title!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="networkTitle"
-                                type="text"
-                                placeholder="Title"  />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('phoneNumber', {
-                            rules: [{ required: true, message: 'Please input expiration term!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="phoneNumber"
-                                type="number"
-                                placeholder="Phone"  />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('region', {
-                            rules: [{ required: true, message: 'Please input measurement unit!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="region"
-                                type="text"
-                                placeholder="Region"  />
-                        )}
-                    </FormItem>
-                    <FormItem>
-                        {getFieldDecorator('managerCode', {
-                            rules: [{ required: true, message: 'Please input manager code!' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                size="large"
-                                name="managerCode"
-                                type="number"
-                                placeholder="Manager Code"  />
-                        )}
-                    </FormItem>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('drugstoreCode', {
+                                    rules: [{ required: true, message: 'Please input drugstore code!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="user" />}
+                                        size="large"
+                                        name="drugstoreCode"
+                                        placeholder="Drugstore Code" />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('address', {
+                                    rules: [{ required: true, message: 'Please input title!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" />}
+                                        size="large"
+                                        name="address"
+                                        type="text"
+                                        placeholder="Address"  />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('networkTitle', {
+                                    rules: [{ required: true, message: 'Please input title!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" />}
+                                        size="large"
+                                        name="networkTitle"
+                                        type="text"
+                                        placeholder="Title"  />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('phoneNumber', {
+                                    rules: [{ required: true, message: 'Please input expiration term!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" />}
+                                        size="large"
+                                        name="phoneNumber"
+                                        type="number"
+                                        placeholder="Phone"  />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('region', {
+                                    rules: [{ required: true, message: 'Please input measurement unit!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" />}
+                                        size="large"
+                                        name="region"
+                                        type="text"
+                                        placeholder="Region"  />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem>
+                                {getFieldDecorator('managerCode', {
+                                    rules: [{ required: true, message: 'Please input manager code!' }],
+                                })(
+                                    <Input
+                                        prefix={<Icon type="lock" />}
+                                        size="large"
+                                        name="managerCode"
+                                        type="number"
+                                        placeholder="Manager Code"  />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
                     <FormItem>
                         <Button type="primary" htmlType="submit" size="large" className="login-form-button">Add</Button>
                     </FormItem>
