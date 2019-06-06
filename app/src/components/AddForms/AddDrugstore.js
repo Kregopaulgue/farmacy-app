@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, notification, Row, Col } from 'antd';
+import { Form, Input, Button, Icon, notification, Row, Col, Select } from 'antd';
 import '../../styles/LoginPage.css';
-import {addRow} from '../../apiUtils';
+import {addRow, getAllManagers} from '../../apiUtils';
 
+const { Option } = Select;
 const FormItem = Form.Item;
 
 class AddDrugstore extends Component {
@@ -25,8 +26,20 @@ class AddDrugstore extends Component {
 class AddDrugstoreForm extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            managers: []
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    async componentDidMount() {
+        const managers = await getAllManagers();
+        console.log(managers);
+
+        this.setState({
+            managers
+        });
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -49,6 +62,7 @@ class AddDrugstoreForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { managers } = this.state;
         return(
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
@@ -131,12 +145,18 @@ class AddDrugstoreForm extends Component {
                                 {getFieldDecorator('managerCode', {
                                     rules: [{ required: true, message: 'Please input manager code!' }],
                                 })(
-                                    <Input
-                                        prefix={<Icon type="lock" />}
-                                        size="large"
-                                        name="managerCode"
-                                        type="number"
-                                        placeholder="Manager Code"  />
+                                    <Select
+                                        showSearch
+                                        placeholder="Select a manufacturer"
+                                        optionFilterProp="children"
+                                        filterOption={(input, option) =>
+                                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }
+                                    >
+                                        {managers.map((manager) =>
+                                            <Option key={manager.surname} value={manager.managerCode}>{manager.name + ' ' + manager.surname}</Option>
+                                        )}
+                                    </Select>
                                 )}
                             </FormItem>
                         </Col>

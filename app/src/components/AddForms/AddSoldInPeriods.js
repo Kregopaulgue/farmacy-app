@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, notification, Row, Col } from 'antd';
+import {Form, Input, Button, Icon, notification, Row, Col, Select} from 'antd';
 import '../../styles/LoginPage.css';
-import {addRow} from '../../apiUtils';
+import {addRow, getManagerDrugstores, getAllMedicines} from '../../apiUtils';
 
+const { Option } = Select;
 const FormItem = Form.Item;
 
 class AddSoldInPeriod extends Component {
@@ -15,7 +16,9 @@ class AddSoldInPeriod extends Component {
         return (
             <div className="login-container">
                 <div className="login-content">
-                    <AntWrappedLoginForm onAdding={this.props.onAdding}/>
+                    <AntWrappedLoginForm
+                        username = {this.props.username}
+                        onAdding={this.props.onAdding}/>
                 </div>
             </div>
         );
@@ -25,8 +28,29 @@ class AddSoldInPeriod extends Component {
 class AddSoldInPeriodForm extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            drugstores: [],
+            medicines: []
+        };
         this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    async componentDidMount() {
+
+        console.log(this.props);
+
+        const drugstoresResp = await getManagerDrugstores(this.props.username);
+        const drugstores = drugstoresResp.content;
+        const medicines = await getAllMedicines();
+
+        console.log(drugstores);
+        console.log(medicines);
+
+        this.setState({
+            drugstores,
+            medicines
+        });
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -48,6 +72,9 @@ class AddSoldInPeriodForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+
+        const {drugstores, medicines} = this.state;
+
         return(
             <div>
                 <Form onSubmit={this.handleSubmit} className="login-form">
@@ -130,12 +157,18 @@ class AddSoldInPeriodForm extends Component {
                                 {getFieldDecorator('drugstoreCode', {
                                     rules: [{ required: true, message: 'Please input drugstore code!' }],
                                 })(
-                                    <Input
-                                        prefix={<Icon type="lock" />}
-                                        size="large"
-                                        name="drugstoreCode"
-                                        type="number"
-                                        placeholder="Drugstore Code"  />
+                                    <Select
+                                        showSearch
+                                        placeholder="Select a drugstore"
+                                        optionFilterProp="children"
+                                        filterOption={(input, option) =>
+                                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }
+                                    >
+                                        {drugstores.map((drugstore) =>
+                                            <Option key={drugstore.drugstoreCode} value={drugstore.drugstoreCode}>{drugstore.networkTitle}</Option>
+                                        )}
+                                    </Select>
                                 )}
                             </FormItem>
                         </Col>
@@ -144,12 +177,18 @@ class AddSoldInPeriodForm extends Component {
                                 {getFieldDecorator('medicineCode', {
                                     rules: [{ required: true, message: 'Please input medicine code!' }],
                                 })(
-                                    <Input
-                                        prefix={<Icon type="lock" />}
-                                        size="large"
-                                        name="medicineCode"
-                                        type="number"
-                                        placeholder="Medicine Code"  />
+                                    <Select
+                                        showSearch
+                                        placeholder="Select a medicine"
+                                        optionFilterProp="children"
+                                        filterOption={(input, option) =>
+                                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }
+                                    >
+                                        {medicines.map((medicine) =>
+                                            <Option key={medicine.title} value={medicine.medicineCode}>{medicine.title}</Option>
+                                        )}
+                                    </Select>
                                 )}
                             </FormItem>
                         </Col>

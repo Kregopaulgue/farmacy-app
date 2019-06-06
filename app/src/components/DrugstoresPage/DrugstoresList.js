@@ -152,6 +152,7 @@ class DrugstoresList extends Component {
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
                 { toAdd && <AddDrugstore
+                                username = {this.props.username}
                                 onAdding={this.getCurrentUserDrugstores}/>}
             </div>
         );

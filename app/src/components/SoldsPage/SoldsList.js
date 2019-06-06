@@ -137,6 +137,8 @@ class SoldsList extends Component {
         ];
 
         const { toAdd, isEditable } = this.state;
+        const { username } = this.props;
+        console.log(username);
 
         return(
             <div className="containerForTable">
@@ -150,6 +152,7 @@ class SoldsList extends Component {
                 </div>
                 <Button className="updateButton" onClick={this.onAdd}>Add</Button>
                 { toAdd && <AddSoldInPeriods
+                                username = {username}
                                 onAdding={this.getCurrentUserDrugstores}/>}
             </div>
         );

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, notification, Row, Col } from 'antd';
+import { Form, Input, Button, Icon, notification, Row, Col, Select } from 'antd';
 import '../../styles/LoginPage.css';
 import {addRow} from '../../apiUtils';
+import {getManufacturers} from '../../apiUtils';
 
+const { Option } = Select;
 const FormItem = Form.Item;
 
 class AddMedicine extends Component {
@@ -25,8 +27,19 @@ class AddMedicine extends Component {
 class AddMedicineForm extends Component {
     constructor(props) {
       super(props);
+
+      this.state = {
+          manufacturers: []
+      };
+
       this.handleSubmit = this.handleSubmit.bind(this);
     };
+
+    async componentDidMount() {
+        const manufacturers = await getManufacturers();
+        this.setState({manufacturers});
+        console.log(manufacturers);
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -35,8 +48,10 @@ class AddMedicineForm extends Component {
                 const newMedicine = Object.assign({}, values);
                 console.log(newMedicine);
                 addRow(newMedicine).then((res) => {
+                    console.log(res);
                     this.props.onAdding();
                 }).catch(error => {
+                    console.log(error);
                     notification.error({
                         message: 'Pharmacy App',
                         description: error.message || 'Sorry! Something went wrong. Please try again!'
@@ -48,6 +63,7 @@ class AddMedicineForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+        const { manufacturers } = this.state;
         return(
           <div>
               <Form onSubmit={this.handleSubmit} className="login-form">
@@ -115,12 +131,18 @@ class AddMedicineForm extends Component {
                               {getFieldDecorator('measurementUnit', {
                                   rules: [{ required: true, message: 'Please input measurement unit!' }],
                               })(
-                                  <Input
-                                      prefix={<Icon type="lock" />}
-                                      size="large"
-                                      name="measurementUnit"
-                                      type="text"
-                                      placeholder="Unit"  />
+                                  <Select
+                                      showSearch
+                                      placeholder="Select a unit"
+                                      optionFilterProp="children"
+                                      filterOption={(input, option) =>
+                                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                  >
+                                      <Option value="pills">Pills</Option>
+                                      <Option value="syrup">Syrup</Option>
+                                      <Option value="powder">Powder</Option>
+                                  </Select>
                               )}
                           </FormItem>
                       </Col>
@@ -129,12 +151,18 @@ class AddMedicineForm extends Component {
                               {getFieldDecorator('manufacturerCode', {
                                   rules: [{ required: true, message: 'Please input manufacturer code!' }],
                               })(
-                                  <Input
-                                      prefix={<Icon type="lock" />}
-                                      size="large"
-                                      name="manufacturerCode"
-                                      type="number"
-                                      placeholder="Manufacturer"  />
+                                  <Select
+                                      showSearch
+                                      placeholder="Select a manufacturer"
+                                      optionFilterProp="children"
+                                      filterOption={(input, option) =>
+                                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                      }
+                                  >
+                                      {manufacturers.map((manufacturer) =>
+                                          <Option key={manufacturer.firmTitle} value={manufacturer.code}>{manufacturer.firmTitle}</Option>
+                                      )}
+                                  </Select>
                               )}
                           </FormItem>
                       </Col>
