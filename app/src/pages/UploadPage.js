@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    Upload, message, Button, Icon,
+    Upload, message, Button, Icon, Row, Col
 } from 'antd';
 import '../styles/DataTable.css';
 
@@ -26,6 +26,8 @@ class UploadPage extends Component {
         if (info.file.status === 'done') {
             message.success(`${info.file.name} file uploaded successfully`);
             const uploadedSolds = info.fileList[0].response;
+
+
             this.setState({uploadedSolds: uploadedSolds});
             this.setState({hasUploaded: true});
         } else if (info.file.status === 'error') {
@@ -77,15 +79,55 @@ class UploadPage extends Component {
                 onChange: this.getUploadedSolds
             };
 
+        const medicineProps = {
+            name: 'file',
+            action: '/api/medicine/upload',
+            headers: {
+                authorization: 'authorization-text',
+            }
+        };
+
+        const drugstoreProps = {
+            name: 'file',
+            action: '/api/drugstore/upload',
+            headers: {
+                authorization: 'authorization-text',
+            }
+        };
+
         return(
             <div>
-                <div className="upload">
-                    <Upload {...props}>
-                        <Button className="uploadButton">
-                            <Icon type="upload" /> Click to Upload
-                        </Button>
-                    </Upload>
-                </div>
+                <Row>
+                    <Col span={8}>
+                        <div className="upload">
+                            <Upload {...props}>
+                                <Button className="uploadButton">
+                                    <Icon type="upload" /> Upload Solds
+                                </Button>
+                            </Upload>
+                        </div>
+                    </Col>
+
+                    <Col span={8}>
+                        <div className="upload">
+                            <Upload {...medicineProps}>
+                                <Button className="uploadButton">
+                                    <Icon type="upload" /> Upload Medicines
+                                </Button>
+                            </Upload>
+                        </div>
+                    </Col>
+
+                    <Col span={8}>
+                        <div className="upload">
+                            <Upload {...drugstoreProps}>
+                                <Button className="uploadButton">
+                                    <Icon type="upload" /> Upload Drugstores
+                                </Button>
+                            </Upload>
+                        </div>
+                    </Col>
+                </Row>
                 <div>
                     <NonEditableTable className="table" numberColumns={numberColumns} textColumns={textColumns} loadedDrugstores={this.state.uploadedSolds} isSold={true}/>
                 </div>
